@@ -30,14 +30,6 @@ public class ProyectoDiagramaController implements Initializable {
         setFiguras(new ArrayList<>());
     }
 
-    public ArrayList<Figuras> getFiguras() {
-        return figuras;
-    }
-
-    public void setFiguras(ArrayList<Figuras> figuras) {
-        this.figuras = figuras;
-    }
-    
     @FXML
     private MenuBar menubar;
     
@@ -83,6 +75,7 @@ public class ProyectoDiagramaController implements Initializable {
         Documento documento = new Documento();
         GraphicsContext gc = canvas.getGraphicsContext2D();
         documento.dibujarDocumento(gc);
+        figuras.add(documento);
     }
 
     @FXML
@@ -91,7 +84,7 @@ public class ProyectoDiagramaController implements Initializable {
         EntradaSalida rombo = new EntradaSalida();
         GraphicsContext gc = canvas.getGraphicsContext2D();
         rombo.dibujarRombo(gc);
-        
+        figuras.add(rombo);
     }
 
     @FXML
@@ -100,6 +93,7 @@ public class ProyectoDiagramaController implements Initializable {
         EtapaProceso rectangle = new EtapaProceso();
         GraphicsContext gc = canvas.getGraphicsContext2D();
         rectangle.dibujarRect(gc);
+        figuras.add(rectangle);
     }
 
     @FXML
@@ -108,6 +102,7 @@ public class ProyectoDiagramaController implements Initializable {
         InicioFin iniciofin = new InicioFin();
         GraphicsContext gc = canvas.getGraphicsContext2D();
         iniciofin.dibujarInicioFin(gc);
+        figuras.add(iniciofin);
     }
 
     @FXML
@@ -116,22 +111,45 @@ public class ProyectoDiagramaController implements Initializable {
         Linea linea = new Linea();
         GraphicsContext gc = canvas.getGraphicsContext2D();
         linea.dibujarLinea(gc);
+        figuras.add(linea);
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        canvas.setOnMouseDragged(new EventHandler<MouseEvent>(){
-            
-            @Override 
-            public void handle(MouseEvent event) {
+        canvas.setOnMousePressed(new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event){
+                //tomo las coordenadas iniciales;;
                 mouseX = event.getSceneX();
                 mouseY = event.getSceneY();
-                System.out.println(" mouseX: "+mouseX + " mouseY: " + mouseY);
+                System.out.println("mouseX: "+ mouseX + "mouseY: "+mouseY);
+            }
+        });
+        canvas.setOnMouseDragged(new EventHandler<MouseEvent>(){
+            @Override 
+            public void handle(MouseEvent event) {
+                //tomo las coordenadas finales
+                mouseTranslateX = event.getSceneX();
+                mouseTranslateY = event.getSceneY();
+                System.out.println(" mouseTranslateX: "+mouseTranslateX + " mouseTranslateY: " + mouseTranslateY);
                 
             }
-            
+        });
+        canvas.setOnMouseReleased(new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event){
+                //seteo x e y de la figura seleccionada
+            } 
         });
     }
-
+    
+    public void addFigura(Figuras f){
+        figuras.add(f);
+    }
+    
+    public void removeFigura(Figuras f){
+        figuras.remove(f);
+    }
+    
     public ArrayList<Figuras> getFiguras() {
         return figuras;
     }
@@ -171,4 +189,5 @@ public class ProyectoDiagramaController implements Initializable {
     public void setMouseTranslateY(double mouseTranslateY) {
         this.mouseTranslateY = mouseTranslateY;
     }
-}
+    
+}   

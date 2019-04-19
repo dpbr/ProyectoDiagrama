@@ -5,6 +5,8 @@
  */
 package proyectodiagrama;
 
+import javafx.scene.canvas.GraphicsContext;
+
 /**
  *
  * @author BLANSKPC

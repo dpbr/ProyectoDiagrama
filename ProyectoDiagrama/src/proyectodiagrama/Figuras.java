@@ -1,5 +1,8 @@
 package proyectodiagrama;
 
+import java.util.ArrayList;
+import javafx.geometry.Point2D;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,21 +14,14 @@ package proyectodiagrama;
  * @author BLANSKPC
  */
 public abstract class Figuras {
-    private int x,y;
+    Point2D centralPoint;
+    ArrayList<Point2D> coordenadas = new ArrayList<>();
     
-    public int getX() {
-        return x;
+    public Point2D getCentralPoint() {
+        return centralPoint;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
+    public void setCentralPoint(Point2D centralPoint) {
+        this.centralPoint = centralPoint;
     }
 }
