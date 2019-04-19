@@ -5,13 +5,14 @@
  */
 package proyectodiagrama;
 
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 
 /**
  *
  * @author BLANSKPC
  */
-public class Linea extends Figuras {
+public class Linea extends Figura {
     //Constructor
     public Linea (){
         
@@ -22,5 +23,20 @@ public class Linea extends Figuras {
         //punta de la linea
         gc.strokeLine(395, 115, 400, 120);//left cada punto tiene un largo de 5
         gc.strokeLine(405, 115, 400, 120);//right
+    }
+
+    @Override
+    public void dibujarFigura(GraphicsContext gc) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean estaDentro(Point2D p) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void crear(Point2D p) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -5,19 +5,19 @@
  */
 package proyectodiagrama;
 
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 
 /**
  *
  * @author BLANSKPC
  */
-public class EntradaSalida extends Figuras {
-    private int x = 0, y = 0;
+public class EntradaSalida extends Figura {
+    
     
     //Constructor
-    public EntradaSalida (/*int x ,int y*/){
-        //setX(x);
-        //setY(y);
+    public EntradaSalida (Point2D p){
+        this.setCentralPoint(p);
     }
     
     public void dibujarRombo(GraphicsContext gc){
@@ -26,20 +26,35 @@ public class EntradaSalida extends Figuras {
         gc.strokeLine(350, 40, 300, 100);//left
         gc.strokeLine(500, 40, 450, 100);//right
     }
+
+    @Override
+    public void dibujarFigura(GraphicsContext gc) {
+        gc.strokeLine(coordenadas.get(0).getX(), coordenadas.get(0).getY(),  coordenadas.get(1).getX(), coordenadas.get(1).getY());
+        gc.strokeLine(coordenadas.get(1).getX(), coordenadas.get(1).getY(),  coordenadas.get(2).getX(), coordenadas.get(2).getY());
+        gc.strokeLine(coordenadas.get(2).getX(), coordenadas.get(2).getY(),  coordenadas.get(3).getX(), coordenadas.get(3).getY());
+        gc.strokeLine(coordenadas.get(3).getX(), coordenadas.get(3).getY(),  coordenadas.get(0).getX(), coordenadas.get(0).getY());
+    }
+
+    @Override
+    public boolean estaDentro(Point2D p) {
+        if(p.getX() > coordenadas.get(3).getX() &&
+           p.getX() < coordenadas.get(1).getX() &&
+           p.getY() > coordenadas.get(0).getY() &&
+           p.getY() < coordenadas.get(2).getY()){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void crear(Point2D p) {
+        coordenadas.clear();
+        coordenadas.add(new Point2D(p.getX()-85,p.getY()-30));
+        coordenadas.add(new Point2D(p.getX()+115,p.getY()-30));
+        coordenadas.add(new Point2D(p.getX()+85,p.getY()+30));
+        coordenadas.add(new Point2D(p.getX()-115,p.getY()+30));
+    }
+
     
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
+    
 }

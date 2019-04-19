@@ -5,6 +5,7 @@
  */
 package proyectodiagrama;
 
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.ArcType;
 
@@ -12,8 +13,8 @@ import javafx.scene.shape.ArcType;
  *
  * @author BLANSKPC
  */
-public class InicioFin extends Figuras {
-    private int x = 0, y = 0;
+public class InicioFin extends Figura {
+    
     
     public InicioFin(){
         
@@ -25,22 +26,23 @@ public class InicioFin extends Figuras {
         gc.strokeArc(479, 40, 40, 60, 278, 165, ArcType.OPEN);//right arc
         gc.strokeArc(283, 40, 40, 60, 95, 165,ArcType.OPEN);//left arc
     }
+
+    @Override
+    public void dibujarFigura(GraphicsContext gc) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean estaDentro(Point2D p) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void crear(Point2D p) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
     
     
 }

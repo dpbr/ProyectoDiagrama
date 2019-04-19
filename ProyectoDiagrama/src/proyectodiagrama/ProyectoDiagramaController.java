@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -22,8 +23,11 @@ import javafx.scene.layout.Pane;
 
 public class ProyectoDiagramaController implements Initializable {
     
-    ArrayList<Figuras> figuras = null;
-    double mouseX, mouseY,mouseTranslateX,mouseTranslateY;
+    ArrayList<Figura> figuras = null;
+    
+    Point2D mouse,mouseT;
+    boolean dragged = false;
+    Figura figuradrag;
     
     //Constructor
     public ProyectoDiagramaController(){
@@ -35,6 +39,7 @@ public class ProyectoDiagramaController implements Initializable {
     
     @FXML
     private Canvas canvas;
+    GraphicsContext gc;
 
     @FXML
     private Pane rectIdentidades;
@@ -73,26 +78,23 @@ public class ProyectoDiagramaController implements Initializable {
     void crearDocumento(ActionEvent event) {
         System.out.println("Documento creado.");
         Documento documento = new Documento();
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        documento.dibujarDocumento(gc);
+        documento.dibujarFigura(gc);
         figuras.add(documento);
     }
 
     @FXML
     void crearEntrada(ActionEvent event) {
         System.out.println("Entrada/Salida creada.");
-        EntradaSalida rombo = new EntradaSalida();
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        rombo.dibujarRombo(gc);
+        EntradaSalida rombo = new EntradaSalida(new Point2D(canvas.getWidth()/2, canvas.getHeight()/2));
+        rombo.dibujarFigura(gc);
         figuras.add(rombo);
     }
 
     @FXML
     void crearEtapa(ActionEvent event) {
         System.out.println("Etapa del proceso creada.");
-        EtapaProceso rectangle = new EtapaProceso();
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        rectangle.dibujarRect(gc);
+        EtapaProceso rectangle = new EtapaProceso(new Point2D(canvas.getWidth()/2, canvas.getHeight()/2));
+        rectangle.dibujarFigura(gc);
         figuras.add(rectangle);
     }
 
@@ -100,8 +102,7 @@ public class ProyectoDiagramaController implements Initializable {
     void crearInicio(ActionEvent event) {
         System.out.println("Inicio/Fin creado.");
         InicioFin iniciofin = new InicioFin();
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        iniciofin.dibujarInicioFin(gc);
+        iniciofin.dibujarFigura(gc);
         figuras.add(iniciofin);
     }
 
@@ -109,85 +110,79 @@ public class ProyectoDiagramaController implements Initializable {
     void crearLinea(ActionEvent event) {
         System.out.println("Línea creada.");
         Linea linea = new Linea();
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        linea.dibujarLinea(gc);
+        
+        linea.dibujarFigura(gc);
         figuras.add(linea);
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        canvas.setOnMousePressed(new EventHandler<MouseEvent>(){
-            @Override
-            public void handle(MouseEvent event){
-                //tomo las coordenadas iniciales;;
-                mouseX = event.getSceneX();
-                mouseY = event.getSceneY();
-                System.out.println("mouseX: "+ mouseX + "mouseY: "+mouseY);
-            }
-        });
-        canvas.setOnMouseDragged(new EventHandler<MouseEvent>(){
-            @Override 
-            public void handle(MouseEvent event) {
-                //tomo las coordenadas finales
-                mouseTranslateX = event.getSceneX();
-                mouseTranslateY = event.getSceneY();
-                System.out.println(" mouseTranslateX: "+mouseTranslateX + " mouseTranslateY: " + mouseTranslateY);
-                
-            }
-        });
-        canvas.setOnMouseReleased(new EventHandler<MouseEvent>(){
-            @Override
-            public void handle(MouseEvent event){
-                //seteo x e y de la figura seleccionada
-            } 
-        });
+        gc = canvas.getGraphicsContext2D();
     }
     
-    public void addFigura(Figuras f){
+    public void addFigura(Figura f){
         figuras.add(f);
     }
     
-    public void removeFigura(Figuras f){
+    public void removeFigura(Figura f){
         figuras.remove(f);
     }
     
-    public ArrayList<Figuras> getFiguras() {
+    public ArrayList<Figura> getFiguras() {
         return figuras;
     }
 
-    public void setFiguras(ArrayList<Figuras> figuras) {
+    public void setFiguras(ArrayList<Figura> figuras) {
         this.figuras = figuras;
     }
 
-    public double getMouseX() {
-        return mouseX;
+    public Point2D getMouse() {
+        return mouse;
     }
 
-    public void setMouseX(double mouseX) {
-        this.mouseX = mouseX;
+    public void setMouse(Point2D mouse) {
+        this.mouse = mouse;
     }
 
-    public double getMouseY() {
-        return mouseY;
+    public Point2D getMouseT() {
+        return mouseT;
     }
 
-    public void setMouseY(double mouseY) {
-        this.mouseY = mouseY;
+    public void setMouseT(Point2D mouseT) {
+        this.mouseT = mouseT;
     }
 
-    public double getMouseTranslateX() {
-        return mouseTranslateX;
+    @FXML
+    private void mover(MouseEvent e) {
+        mouse = new Point2D(e.getX(),e.getY());
+        if(figuradrag == null){
+            for(Figura f: figuras){
+                if(f.estaDentro(mouse)){
+                    //f.setCentralPoint(mouse);
+                    figuradrag = f;
+
+                }
+            }
+        }
+        
+        figuradrag.setCentralPoint(mouse);
+        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        dibujar();
+        
+    }
+    
+    private void dibujar(){
+        
+        for(Figura f: figuras){
+            f.dibujarFigura(gc);
+        }
     }
 
-    public void setMouseTranslateX(double mouseTranslateX) {
-        this.mouseTranslateX = mouseTranslateX;
+    @FXML
+    private void soltar(MouseEvent event) {
+        figuradrag = null;
+        dragged = false;
     }
 
-    public double getMouseTranslateY() {
-        return mouseTranslateY;
-    }
-
-    public void setMouseTranslateY(double mouseTranslateY) {
-        this.mouseTranslateY = mouseTranslateY;
-    }
+    
     
 }   

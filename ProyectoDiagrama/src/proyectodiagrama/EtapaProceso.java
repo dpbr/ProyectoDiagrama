@@ -5,43 +5,58 @@
  */
 package proyectodiagrama;
 
+import javafx.geometry.Point2D;
+import javafx.geometry.VPos;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 
 /**
  *
  * @author BLANSKPC
  */
-public class EtapaProceso extends Figuras{
-    private int x = 0, y = 0;
+public class EtapaProceso extends Figura{
+    
     
     //Constructor
-    public EtapaProceso (/*int x ,int y*/){
-        //setX(x);
-        //setY(y);
+    public EtapaProceso (Point2D p){
+        this.setNombre("algo");
+        this.setCentralPoint(p);
     }
     
-    public void dibujarRect(GraphicsContext gc){
-        gc.strokeLine(300, 40, 500, 40);//top
-        gc.strokeLine(300, 100, 500, 100);//bottom
-        gc.strokeLine(300, 40, 300, 100);//left
-        gc.strokeLine(500, 40, 500, 100);//right
+    public void dibujarFigura(GraphicsContext gc){
+        gc.setTextAlign(TextAlignment.CENTER);
+        gc.setTextBaseline(VPos.CENTER);
+        gc.setFont(Font.font(15));
+        gc.fillText(nombre, (int)centralPoint.getX(), (int)centralPoint.getY());
+        gc.strokeLine(coordenadas.get(0).getX(), coordenadas.get(0).getY(),  coordenadas.get(1).getX(), coordenadas.get(1).getY());
+        gc.strokeLine(coordenadas.get(1).getX(), coordenadas.get(1).getY(),  coordenadas.get(2).getX(), coordenadas.get(2).getY());
+        gc.strokeLine(coordenadas.get(2).getX(), coordenadas.get(2).getY(),  coordenadas.get(3).getX(), coordenadas.get(3).getY());
+        gc.strokeLine(coordenadas.get(3).getX(), coordenadas.get(3).getY(),  coordenadas.get(0).getX(), coordenadas.get(0).getY());
+        
     }
     
-    public int getX() {
-        return x;
+    @Override
+    public boolean estaDentro(Point2D p) {
+        if(p.getX() > coordenadas.get(0).getX() &&
+           p.getX() < coordenadas.get(1).getX() &&
+           p.getY() > coordenadas.get(0).getY() &&
+           p.getY() < coordenadas.get(2).getY()){
+            return true;
+        }
+        return false;
     }
 
-    public void setX(int x) {
-        this.x = x;
+    @Override
+    public void crear(Point2D p) {
+        coordenadas.clear();
+        coordenadas.add(new Point2D(p.getX()-((ancho()*3)/4),p.getY()-30));
+        coordenadas.add(new Point2D(p.getX()+((ancho()*3)/4),p.getY()-30));
+        coordenadas.add(new Point2D(p.getX()+((ancho()*3)/4),p.getY()+30));
+        coordenadas.add(new Point2D(p.getX()-((ancho()*3)/4),p.getY()+30));
     }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
+    
+    
     
     
 }
