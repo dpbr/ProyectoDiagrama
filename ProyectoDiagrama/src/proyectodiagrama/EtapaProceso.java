@@ -23,7 +23,10 @@ public class EtapaProceso extends Figura{
         this.setNombre("algo");
         this.setCentralPoint(p);
     }
-    
+    /**
+     * Dibujar la figura
+     * @param gc 
+     */
     public void dibujarFigura(GraphicsContext gc){
         gc.setTextAlign(TextAlignment.CENTER);
         gc.setTextBaseline(VPos.CENTER);
