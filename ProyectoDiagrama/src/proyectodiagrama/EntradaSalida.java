@@ -6,7 +6,10 @@
 package proyectodiagrama;
 
 import javafx.geometry.Point2D;
+import javafx.geometry.VPos;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 
 /**
  *
@@ -17,18 +20,18 @@ public class EntradaSalida extends Figura {
     
     //Constructor
     public EntradaSalida (Point2D p){
+        this.setNombre("Entrada / Salida");
         this.setCentralPoint(p);
     }
     
-    public void dibujarRombo(GraphicsContext gc){
-        gc.strokeLine(350, 40, 500, 40);//top
-        gc.strokeLine(300, 100, 450, 100);//bottom
-        gc.strokeLine(350, 40, 300, 100);//left
-        gc.strokeLine(500, 40, 450, 100);//right
-    }
-
     @Override
     public void dibujarFigura(GraphicsContext gc) {
+        //poner texto dentro de la figura
+        gc.setTextAlign(TextAlignment.CENTER);
+        gc.setTextBaseline(VPos.CENTER);
+        gc.setFont(Font.font(15));
+        gc.fillText(nombre, (int)centralPoint.getX(), (int)centralPoint.getY());
+        //Dibuja las líneas
         gc.strokeLine(coordenadas.get(0).getX(), coordenadas.get(0).getY(),  coordenadas.get(1).getX(), coordenadas.get(1).getY());
         gc.strokeLine(coordenadas.get(1).getX(), coordenadas.get(1).getY(),  coordenadas.get(2).getX(), coordenadas.get(2).getY());
         gc.strokeLine(coordenadas.get(2).getX(), coordenadas.get(2).getY(),  coordenadas.get(3).getX(), coordenadas.get(3).getY());
@@ -49,10 +52,10 @@ public class EntradaSalida extends Figura {
     @Override
     public void crear(Point2D p) {
         coordenadas.clear();
-        coordenadas.add(new Point2D(p.getX()-85,p.getY()-30));
-        coordenadas.add(new Point2D(p.getX()+115,p.getY()-30));
-        coordenadas.add(new Point2D(p.getX()+85,p.getY()+30));
-        coordenadas.add(new Point2D(p.getX()-115,p.getY()+30));
+        coordenadas.add(new Point2D(p.getX()-((ancho()*3)/4)+10,p.getY()-20));
+        coordenadas.add(new Point2D(p.getX()+((ancho()*3)/4)+10,p.getY()-20));
+        coordenadas.add(new Point2D(p.getX()+((ancho()*3)/4)-10,p.getY()+20));
+        coordenadas.add(new Point2D(p.getX()-((ancho()*3)/4)-10,p.getY()+20));
     }
 
     

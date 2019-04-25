@@ -16,14 +16,32 @@ import javafx.scene.text.Text;
  * @author BLANSKPC
  */
 public abstract class Figura {
-    String nombre;
-    Point2D centralPoint;
-    ArrayList<Point2D> coordenadas = new ArrayList<>();
+    //atributos
+    String nombre; //Texto que irá en el centro de la figura
+    Point2D centralPoint; //Este punto va en el centro de la figura y con él se crean los demás (vértices).
+    ArrayList<Point2D> coordenadas = new ArrayList<>(); //Esta lista guardará las coordenadas de los vértices de la figura
     
+    /**
+     * Método abstracto que dibuja la figura a base de los puntos de referencia.
+     * @param gc 
+     */
     abstract public void dibujarFigura(GraphicsContext gc);
+    /**
+     * Método abstracto que pregunta si el cursor (coordenadas x,y) está dentro de la figura al presionar click.
+     * @param p
+     * @return boolean
+     */
     abstract public boolean estaDentro(Point2D p);
+    /**
+     * Método abstracto que crear los puntos de referencia de cada figura (el método funciona distinto dependiendo de la figura).
+     * @param p 
+     */
     abstract public void crear(Point2D p);
     
+    /**
+     * Método que se encarga de capturar el ancho del texto que va dentro de la figura.
+     * @return double
+     */
     public double ancho(){
         Text text = new Text(this.nombre);
         if(text.getLayoutBounds().getWidth() < text.getLayoutBounds().getHeight()){

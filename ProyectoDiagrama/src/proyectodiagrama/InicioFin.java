@@ -6,8 +6,11 @@
 package proyectodiagrama;
 
 import javafx.geometry.Point2D;
+import javafx.geometry.VPos;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.ArcType;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 
 /**
  *
@@ -16,30 +19,44 @@ import javafx.scene.shape.ArcType;
 public class InicioFin extends Figura {
     
     
-    public InicioFin(){
-        
+    public InicioFin(Point2D p){
+        this.setNombre("Inicio / Fin");
+        this.setCentralPoint(p);
     }
     
-    public void dibujarInicioFin(GraphicsContext gc){
-        gc.strokeLine(300, 40, 500, 40);//top
-        gc.strokeLine(300, 100, 500, 100);//bottom
-        gc.strokeArc(479, 40, 40, 60, 278, 165, ArcType.OPEN);//right arc
-        gc.strokeArc(283, 40, 40, 60, 95, 165,ArcType.OPEN);//left arc
-    }
-
     @Override
     public void dibujarFigura(GraphicsContext gc) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //poner texto dentro de la figura
+        gc.setTextAlign(TextAlignment.CENTER);
+        gc.setTextBaseline(VPos.CENTER);
+        gc.setFont(Font.font(15));
+        gc.fillText(nombre, (int)centralPoint.getX(), (int)centralPoint.getY());
+        //Dibuja las líneas y arcos
+        gc.strokeLine(coordenadas.get(0).getX(), coordenadas.get(0).getY(),  coordenadas.get(1).getX(), coordenadas.get(1).getY());
+        gc.strokeArc(coordenadas.get(2).getX()-20, coordenadas.get(0).getY(), 40, 40, 270, 180, ArcType.OPEN);//right arc
+        gc.strokeLine(coordenadas.get(2).getX(), coordenadas.get(2).getY(),  coordenadas.get(3).getX(), coordenadas.get(3).getY());
+        gc.strokeArc(coordenadas.get(0).getX()-20, coordenadas.get(0).getY(), 40, 40, 90, 180,ArcType.OPEN);//left arc
+        
     }
 
     @Override
     public boolean estaDentro(Point2D p) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(p.getX() > coordenadas.get(0).getX() &&
+           p.getX() < coordenadas.get(1).getX() &&
+           p.getY() > coordenadas.get(0).getY() &&
+           p.getY() < coordenadas.get(2).getY()){
+            return true;
+        }
+        return false;
     }
 
     @Override
     public void crear(Point2D p) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        coordenadas.clear();
+        coordenadas.add(new Point2D(p.getX()-((ancho()*3)/4),p.getY()-20));
+        coordenadas.add(new Point2D(p.getX()+((ancho()*3)/4),p.getY()-20));
+        coordenadas.add(new Point2D(p.getX()+((ancho()*3)/4),p.getY()+20));
+        coordenadas.add(new Point2D(p.getX()-((ancho()*3)/4),p.getY()+20));
     }
 
     

@@ -77,7 +77,8 @@ public class ProyectoDiagramaController implements Initializable {
     @FXML
     void crearDocumento(ActionEvent event) {
         System.out.println("Documento creado.");
-        Documento documento = new Documento();
+        Documento documento = new Documento(new Point2D(canvas.getWidth()/2, canvas.getHeight()/2));
+        
         documento.dibujarFigura(gc);
         figuras.add(documento);
     }
@@ -101,7 +102,7 @@ public class ProyectoDiagramaController implements Initializable {
     @FXML
     void crearInicio(ActionEvent event) {
         System.out.println("Inicio/Fin creado.");
-        InicioFin iniciofin = new InicioFin();
+        InicioFin iniciofin = new InicioFin(new Point2D(canvas.getWidth()/2, canvas.getHeight()/2));
         iniciofin.dibujarFigura(gc);
         figuras.add(iniciofin);
     }
