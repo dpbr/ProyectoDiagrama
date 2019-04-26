@@ -110,12 +110,14 @@ public class ProyectoDiagramaController implements Initializable {
 
     @FXML
     void crearLinea(ActionEvent event) {
-        block = true;
+        if(figuras.size()>1){
+            block = true;
         blockbtn();
         inicio=null;fin=null;
         
         canvas.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override 
+            
+            @Override
             public void handle(MouseEvent event) {
                 mouse = new Point2D (event.getX(),event.getY());
                 
@@ -137,8 +139,8 @@ public class ProyectoDiagramaController implements Initializable {
                 }
                 
             }
-        });
-        
+        });  
+        }
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
