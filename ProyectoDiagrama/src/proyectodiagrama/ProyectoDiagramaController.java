@@ -26,8 +26,9 @@ public class ProyectoDiagramaController implements Initializable {
     ArrayList<Figura> figuras = null;
     
     Point2D mouse,mouseT;
-    boolean dragged = false;
+    boolean dragged = false, block = false;
     Figura figuradrag;
+    Figura inicio=null,fin=null;
     
     //Constructor
     public ProyectoDiagramaController(){
@@ -78,7 +79,6 @@ public class ProyectoDiagramaController implements Initializable {
     void crearDocumento(ActionEvent event) {
         System.out.println("Documento creado.");
         Documento documento = new Documento(new Point2D(canvas.getWidth()/2, canvas.getHeight()/2));
-        
         documento.dibujarFigura(gc);
         figuras.add(documento);
     }
@@ -101,6 +101,7 @@ public class ProyectoDiagramaController implements Initializable {
 
     @FXML
     void crearInicio(ActionEvent event) {
+        
         System.out.println("Inicio/Fin creado.");
         InicioFin iniciofin = new InicioFin(new Point2D(canvas.getWidth()/2, canvas.getHeight()/2));
         iniciofin.dibujarFigura(gc);
@@ -109,11 +110,35 @@ public class ProyectoDiagramaController implements Initializable {
 
     @FXML
     void crearLinea(ActionEvent event) {
-        System.out.println("Línea creada.");
-        Linea linea = new Linea();
+        block = true;
+        blockbtn();
+        inicio=null;fin=null;
         
-        linea.dibujarFigura(gc);
-        figuras.add(linea);
+        canvas.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override 
+            public void handle(MouseEvent event) {
+                mouse = new Point2D (event.getX(),event.getY());
+                
+                for(Figura f: figuras){
+                    if(f.estaDentro(mouse)){
+                        if(inicio == null){
+                            inicio = f;
+                        }
+                        else if(fin == null && f != inicio){
+                            fin = f;
+                            Linea linea = new Linea(inicio, fin);
+                            linea.dibujarFigura(gc);
+                            figuras.add(linea);
+                            block = false;
+                            blockbtn();
+                            return;
+                        }    
+                    }
+                }
+                
+            }
+        });
+        
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -154,36 +179,51 @@ public class ProyectoDiagramaController implements Initializable {
 
     @FXML
     private void mover(MouseEvent e) {
-        mouse = new Point2D(e.getX(),e.getY());
-        if(figuradrag == null){
-            for(Figura f: figuras){
-                if(f.estaDentro(mouse)){
-                    //f.setCentralPoint(mouse);
-                    figuradrag = f;
-
+        if(!block){
+            mouse = new Point2D(e.getX(),e.getY());
+            if(figuradrag == null){
+                for(Figura f: figuras){
+                    if(f.estaDentro(mouse)){
+                        //f.setCentralPoint(mouse);
+                        figuradrag = f;
+                    }
                 }
             }
+            try{
+                figuradrag.setCentralPoint(mouse);
+            }catch(Exception ex){
+                //no existe figuradrag
+            }
+            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+            dibujar();
         }
-        
-        figuradrag.setCentralPoint(mouse);
-        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        dibujar();
-        
     }
     
     private void dibujar(){
-        
         for(Figura f: figuras){
+            if(f instanceof Linea){
+                ((Linea) f).refresh();
+            }
             f.dibujarFigura(gc);
         }
     }
+    
+    
 
     @FXML
     private void soltar(MouseEvent event) {
         figuradrag = null;
         dragged = false;
     }
-
+    
+    private void blockbtn(){
+        //estoy bloqueando los botones
+        btnLinea.setDisable(block);
+        btnInicio.setDisable(block);
+        btnEtapa.setDisable(block);
+        btnDocumento.setDisable(block);
+        btnEntrada.setDisable(block);
+    }
     
     
 }   

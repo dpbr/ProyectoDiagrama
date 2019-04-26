@@ -59,7 +59,4 @@ public class InicioFin extends Figura {
         coordenadas.add(new Point2D(p.getX()-((ancho()*3)/4),p.getY()+20));
     }
 
-    
-    
-    
 }

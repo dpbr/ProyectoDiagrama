@@ -13,9 +13,14 @@ import javafx.scene.canvas.GraphicsContext;
  * @author BLANSKPC
  */
 public class Linea extends Figura {
+    Figura inicio,fin;
+    
     //Constructor
-    public Linea (){
-        
+    public Linea (Figura inicio, Figura fin){
+        this.inicio = inicio;
+        this.fin = fin;
+        this.setNombre("");
+        this.setCentralPoint(inicio.getCentralPoint());
     }
     
     public void dibujarLinea(GraphicsContext gc){ //tiene que recibir las coordenadas x e y del mouse
@@ -24,19 +29,32 @@ public class Linea extends Figura {
         gc.strokeLine(395, 115, 400, 120);//left cada punto tiene un largo de 5
         gc.strokeLine(405, 115, 400, 120);//right
     }
-
+    
+    public void refresh(){
+        coordenadas.clear();
+        coordenadas.add(inicio.getCentralPoint());
+        coordenadas.add(fin.getCentralPoint());
+    }
+    
     @Override
     public void dibujarFigura(GraphicsContext gc) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(inicio instanceof Documento){
+            gc.strokeLine(coordenadas.get(0).getX(), coordenadas.get(0).getY()+50,  coordenadas.get(1).getX(), coordenadas.get(1).getY()-20);
+        }else{
+            gc.strokeLine(coordenadas.get(0).getX(), coordenadas.get(0).getY()+20,  coordenadas.get(1).getX(), coordenadas.get(1).getY()-20);
+        }
+        
     }
 
     @Override
     public boolean estaDentro(Point2D p) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return false;
     }
 
     @Override
     public void crear(Point2D p) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        coordenadas.clear();
+        coordenadas.add(inicio.getCentralPoint());
+        coordenadas.add(fin.getCentralPoint());
     }
 }
