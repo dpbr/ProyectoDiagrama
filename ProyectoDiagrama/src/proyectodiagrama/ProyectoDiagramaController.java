@@ -15,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.image.ImageView;
@@ -24,7 +25,7 @@ import javafx.scene.layout.Pane;
 public class ProyectoDiagramaController implements Initializable {
     
     ArrayList<Figura> figuras = null;
-    
+    boolean start = false, end = false;
     Point2D mouse,mouseT;
     boolean dragged = false, block = false;
     Figura figuradrag;
@@ -77,39 +78,69 @@ public class ProyectoDiagramaController implements Initializable {
     
     @FXML
     void crearDocumento(ActionEvent event) {
-        System.out.println("Documento creado.");
-        Documento documento = new Documento(new Point2D(canvas.getWidth()/2, canvas.getHeight()/2));
-        documento.dibujarFigura(gc);
-        figuras.add(documento);
+        if (!start) {
+            alertBox("Requiere un INICIO antes");
+        }
+        else{
+            System.out.println("Documento creado.");
+            Documento documento = new Documento(new Point2D(canvas.getWidth()/2, canvas.getHeight()/2));
+            documento.dibujarFigura(gc);
+            figuras.add(documento);
+        }
+        
     }
 
     @FXML
     void crearEntrada(ActionEvent event) {
-        System.out.println("Entrada/Salida creada.");
-        EntradaSalida rombo = new EntradaSalida(new Point2D(canvas.getWidth()/2, canvas.getHeight()/2));
-        rombo.dibujarFigura(gc);
-        figuras.add(rombo);
+        if (!start) {
+            alertBox("Requiere un INICIO antes");
+        }
+        else{
+            System.out.println("Entrada/Salida creada.");
+            EntradaSalida rombo = new EntradaSalida(new Point2D(canvas.getWidth()/2, canvas.getHeight()/2));
+            rombo.dibujarFigura(gc);
+            figuras.add(rombo);
+        }
     }
 
     @FXML
     void crearEtapa(ActionEvent event) {
-        System.out.println("Etapa del proceso creada.");
-        EtapaProceso rectangle = new EtapaProceso(new Point2D(canvas.getWidth()/2, canvas.getHeight()/2));
-        rectangle.dibujarFigura(gc);
-        figuras.add(rectangle);
+        if (!start) {
+            alertBox("Requiere un INICIO antes");
+        }
+        else{
+            System.out.println("Etapa del proceso creada.");
+            EtapaProceso rectangle = new EtapaProceso(new Point2D(canvas.getWidth()/2, canvas.getHeight()/2));
+            rectangle.dibujarFigura(gc);
+            figuras.add(rectangle);
+        }
     }
 
     @FXML
     void crearInicio(ActionEvent event) {
         
-        System.out.println("Inicio/Fin creado.");
-        InicioFin iniciofin = new InicioFin(new Point2D(canvas.getWidth()/2, canvas.getHeight()/2));
-        iniciofin.dibujarFigura(gc);
-        figuras.add(iniciofin);
+        if (!start) {
+            this.start = true;
+            System.out.println("Inicio/Fin creado.");
+            InicioFin iniciofin = new InicioFin(new Point2D(canvas.getWidth()/2, canvas.getHeight()/2), "Inicio");
+            iniciofin.dibujarFigura(gc);
+            figuras.add(iniciofin);
+        }
+        else if(start && !end){
+            this.end = true;
+            System.out.println("Inicio/Fin creado.");
+            InicioFin iniciofin = new InicioFin(new Point2D(canvas.getWidth()/2, canvas.getHeight()/2), "Fin");
+            iniciofin.dibujarFigura(gc);
+            figuras.add(iniciofin);
+        }
+        else{
+            alertBox("YA TIENE UN INICIO Y UN FIN");
+        }
     }
 
     @FXML
     void crearLinea(ActionEvent event) {
+
         if(figuras.size()>1){
             block = true;
         blockbtn();
@@ -140,6 +171,9 @@ public class ProyectoDiagramaController implements Initializable {
                 
             }
         });  
+        }
+        else{
+            alertBox("Requiere DOS procesos antes");
         }
     }
     @Override
@@ -227,5 +261,12 @@ public class ProyectoDiagramaController implements Initializable {
         btnEntrada.setDisable(block);
     }
     
-    
+    public void alertBox (String text){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("ERROR");
+        alert.setHeaderText("ADVERTENCIA");
+        alert.setContentText(text);
+        alert.showAndWait();
+    }
+
 }   

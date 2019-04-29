@@ -19,8 +19,8 @@ import javafx.scene.text.TextAlignment;
 public class InicioFin extends Figura {
     
     
-    public InicioFin(Point2D p){
-        this.setNombre("Inicio / Fin");
+    public InicioFin(Point2D p, String text){
+        this.setNombre(text);
         this.setCentralPoint(p);
     }
     

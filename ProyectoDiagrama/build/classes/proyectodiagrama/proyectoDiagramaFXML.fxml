@@ -31,8 +31,8 @@
           </Menu>
         </menus>
       </MenuBar>
-      <Canvas fx:id="canvas" height="691.0" layoutX="200.0" layoutY="29.0" width="1000.0" />
-      <Pane fx:id="rectIdentidades" layoutY="29.0" prefHeight="691.0" prefWidth="200.0" style="-fx-background-color: #BDBFBD;">
+      <Canvas fx:id="canvas" height="690.0" layoutX="200.0" layoutY="29.0" onMouseDragged="#mover" onMouseReleased="#soltar" width="1000.0" />
+      <Pane fx:id="rectIdentidades" layoutY="29.0" prefHeight="690.0" prefWidth="200.0" style="-fx-background-color: #BDBFBD;">
          <children>
             <ImageView fx:id="imgLinea" fitHeight="90.0" fitWidth="130.0" layoutX="35.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -59,11 +59,11 @@
                   <Image url="@../imagenes/documento.png" />
                </image>
             </ImageView>
-            <Button fx:id="btnLinea" layoutX="25.0" layoutY="106.0" mnemonicParsing="false" onAction="#crearLinea" text="Línea de flujo de proceso" />
-            <Button fx:id="btnInicio" layoutX="57.0" layoutY="239.0" mnemonicParsing="false" onAction="#crearInicio" text="Inicio / Fin" />
-            <Button fx:id="btnEtapa" layoutX="37.0" layoutY="371.0" mnemonicParsing="false" onAction="#crearEtapa" text="Etapa del proceso" />
-            <Button fx:id="btnEntrada" layoutX="42.0" layoutY="507.0" mnemonicParsing="false" onAction="#crearEntrada" text="Entrada / Salida" />
-            <Button fx:id="btnDocumento" layoutX="52.0" layoutY="638.0" mnemonicParsing="false" onAction="#crearDocumento" text="Documento" />
+            <Button fx:id="btnLinea" layoutX="68.0" layoutY="107.0" mnemonicParsing="false" onAction="#crearLinea" text="Crear" />
+            <Button fx:id="btnInicio" layoutX="68.0" layoutY="239.0" mnemonicParsing="false" onAction="#crearInicio" text="Crear" />
+            <Button fx:id="btnEtapa" layoutX="68.0" layoutY="372.0" mnemonicParsing="false" onAction="#crearEtapa" text="Crear" />
+            <Button fx:id="btnEntrada" layoutX="68.0" layoutY="506.0" mnemonicParsing="false" onAction="#crearEntrada" text="Crear" />
+            <Button fx:id="btnDocumento" layoutX="68.0" layoutY="637.0" mnemonicParsing="false" onAction="#crearDocumento" text="Crear" />
          </children>
       </Pane>
    </children>
