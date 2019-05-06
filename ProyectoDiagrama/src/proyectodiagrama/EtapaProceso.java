@@ -8,6 +8,7 @@ package proyectodiagrama;
 import javafx.geometry.Point2D;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 /**
@@ -18,7 +19,7 @@ public class EtapaProceso extends Figura{
     
     //Constructor
     public EtapaProceso (Point2D p){
-        this.setNombre("Etapa del Proceso");
+        this.setNombre("   ");
         this.setCentralPoint(p);
     }
     /**
@@ -29,14 +30,24 @@ public class EtapaProceso extends Figura{
         //poner texto dentro de la figura
         gc.setTextAlign(TextAlignment.CENTER);
         gc.setTextBaseline(VPos.CENTER);
-        gc.setFont(Font.font(15));
-        gc.fillText(nombre, (int)centralPoint.getX(), (int)centralPoint.getY());
+        
+        //Dibuja fondo
+        gc.setStroke(Color.LAVENDER);
+        gc.setLineWidth(3.5);
+        for (int i = 0; i < (coordenadas.get(1).getX()-this.centralPoint.getX()); i++) {
+            gc.strokeLine(coordenadas.get(1).getX()-2*i, coordenadas.get(1).getY()+1,  coordenadas.get(2).getX()-2*i, coordenadas.get(2).getY()-1);
+        }
+        
         //Dibuja las líneas
+        gc.setStroke(Color.BLACK);
+        gc.setLineWidth(1);
         gc.strokeLine(coordenadas.get(0).getX(), coordenadas.get(0).getY(),  coordenadas.get(1).getX(), coordenadas.get(1).getY());
         gc.strokeLine(coordenadas.get(1).getX(), coordenadas.get(1).getY(),  coordenadas.get(2).getX(), coordenadas.get(2).getY());
         gc.strokeLine(coordenadas.get(2).getX(), coordenadas.get(2).getY(),  coordenadas.get(3).getX(), coordenadas.get(3).getY());
         gc.strokeLine(coordenadas.get(3).getX(), coordenadas.get(3).getY(),  coordenadas.get(0).getX(), coordenadas.get(0).getY());
         
+        gc.setFont(Font.font(15));
+        gc.fillText(nombre, (int)centralPoint.getX(), (int)centralPoint.getY());
     }
     
     @Override

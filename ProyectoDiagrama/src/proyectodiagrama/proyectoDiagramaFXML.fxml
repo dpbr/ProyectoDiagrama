@@ -9,61 +9,116 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1200.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyectodiagrama.ProyectoDiagramaController">
    <children>
-      <MenuBar fx:id="menubar" prefHeight="29.0" prefWidth="1200.0">
+      <Pane layoutY="30.0" prefHeight="40.0" prefWidth="1200.0" style="-fx-background-color: #BDBFBD;">
+         <children>
+            <Text layoutX="21.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Herramientas:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Text>
+            <Button fx:id="btnPlay" layoutX="141.0" layoutY="5.0" mnemonicParsing="false" onAction="#play" prefHeight="30.0" prefWidth="34.0">
+               <graphic>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/icon_correr.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btnBorrar" layoutX="184.0" layoutY="4.0" mnemonicParsing="false" onAction="#borrar" prefHeight="30.0" prefWidth="33.0">
+               <graphic>
+                  <ImageView fx:id="imgBorrar" fitHeight="17.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/icon_borrar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btnBorrartodo" layoutX="226.0" layoutY="4.0" mnemonicParsing="false" onAction="#borrarTodo" prefHeight="30.0" prefWidth="34.0">
+               <graphic>
+                  <ImageView fitHeight="17.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/icon_borrartodo.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </Pane>
+      <MenuBar fx:id="menubar" prefHeight="30.0" prefWidth="1200.0">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu mnemonicParsing="false" text="Archivo">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+              <MenuItem mnemonicParsing="false" text="Abrir archivo" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
+          <Menu mnemonicParsing="false" text="Editar">
             <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
+              <MenuItem fx:id="mBorrar" mnemonicParsing="false" onAction="#borrar" text="Borrar un elemento" />
+                  <MenuItem fx:id="menuBorrartodo" mnemonicParsing="false" onAction="#borrarTodo" text="Borrar todo" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Help">
+          <Menu mnemonicParsing="false" text="Ayuda">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" text="Acerca de Proyecto Diagrama" />
             </items>
           </Menu>
         </menus>
       </MenuBar>
-      <Canvas fx:id="canvas" height="690.0" layoutX="200.0" layoutY="29.0" onMouseDragged="#mover" onMouseReleased="#soltar" width="1000.0" />
-      <Pane fx:id="rectIdentidades" layoutY="29.0" prefHeight="690.0" prefWidth="200.0" style="-fx-background-color: #BDBFBD;">
+      <Canvas fx:id="canvas" height="651.0" layoutX="130.0" layoutY="70.0" onMouseClicked="#dobleclick" onMouseDragged="#mover" onMouseReleased="#soltar" width="1070.0" />
+      <Pane fx:id="rectIdentidades" layoutY="69.0" prefHeight="651.0" prefWidth="130.0" style="-fx-background-color: #BDBFBD;">
          <children>
-            <ImageView fx:id="imgLinea" fitHeight="90.0" fitWidth="130.0" layoutX="35.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../imagenes/lineaproceso.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="imgInicio" fitHeight="90.0" fitWidth="130.0" layoutX="35.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../imagenes/iniciofin.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="imgEtapa" fitHeight="90.0" fitWidth="130.0" layoutX="35.0" layoutY="274.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../imagenes/etapadelproceso.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="imgEntrada" fitHeight="90.0" fitWidth="130.0" layoutX="35.0" layoutY="406.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../imagenes/entradasalida.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="imgDocumento" fitHeight="90.0" fitWidth="130.0" layoutX="35.0" layoutY="540.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../imagenes/documento.png" />
-               </image>
-            </ImageView>
-            <Button fx:id="btnLinea" layoutX="68.0" layoutY="107.0" mnemonicParsing="false" onAction="#crearLinea" text="Crear" />
-            <Button fx:id="btnInicio" layoutX="68.0" layoutY="239.0" mnemonicParsing="false" onAction="#crearInicio" text="Crear" />
-            <Button fx:id="btnEtapa" layoutX="68.0" layoutY="372.0" mnemonicParsing="false" onAction="#crearEtapa" text="Crear" />
-            <Button fx:id="btnEntrada" layoutX="68.0" layoutY="506.0" mnemonicParsing="false" onAction="#crearEntrada" text="Crear" />
-            <Button fx:id="btnDocumento" layoutX="68.0" layoutY="637.0" mnemonicParsing="false" onAction="#crearDocumento" text="Crear" />
+            <Button fx:id="btnLinea" layoutX="10.0" layoutY="45.0" mnemonicParsing="false" onAction="#crearLinea" prefHeight="78.0" prefWidth="111.0">
+               <graphic>
+                  <ImageView fx:id="imgLinea" fitHeight="70.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/lineaproceso.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button fx:id="btnInicio" layoutX="10.0" layoutY="133.0" mnemonicParsing="false" onAction="#crearInicio" prefHeight="78.0" prefWidth="111.0">
+               <graphic>
+                  <ImageView fx:id="imgInicio" fitHeight="70.0" fitWidth="91.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/iniciofin.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button fx:id="btnEtapa" layoutX="10.0" layoutY="222.0" mnemonicParsing="false" onAction="#crearEtapa" prefHeight="78.0" prefWidth="111.0">
+               <graphic>
+                  <ImageView fx:id="imgEtapa" fitHeight="70.0" fitWidth="91.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/etapadelproceso.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button fx:id="btnDocumento" layoutX="11.0" layoutY="399.0" mnemonicParsing="false" onAction="#crearDocumento" prefHeight="78.0" prefWidth="111.0">
+               <graphic>
+                  <ImageView fx:id="imgDocumento" fitHeight="70.0" fitWidth="91.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/documento.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Text layoutX="27.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Identidades">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Text>
+            <Button fx:id="btnEntrada" layoutX="11.0" layoutY="310.0" mnemonicParsing="false" onAction="#crearEntrada" prefHeight="78.0" prefWidth="111.0">
+               <graphic>
+                  <ImageView fx:id="imgEntrada" fitHeight="70.0" fitWidth="91.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/entradasalida.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </Pane>
    </children>

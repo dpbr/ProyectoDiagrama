@@ -1,0 +1,6 @@
+#FBF2C9 inicio y fin
+#F7FDE5 etapa del proceso
+#E2FFE8 salida
+#FFE6FD entrada
+#DAE3FC condicion
+#AE7A7E linea

@@ -8,6 +8,7 @@ package proyectodiagrama;
 import javafx.geometry.Point2D;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
@@ -19,24 +20,42 @@ import javafx.scene.text.TextAlignment;
 public class InicioFin extends Figura {
     
     
-    public InicioFin(Point2D p, String text){
-        this.setNombre(text);
+    public InicioFin(Point2D p){
+        this.setNombre("   ");
         this.setCentralPoint(p);
     }
     
     @Override
     public void dibujarFigura(GraphicsContext gc) {
         //poner texto dentro de la figura
+        gc.setStroke(Color.BLACK);
+        gc.setLineWidth(1);
         gc.setTextAlign(TextAlignment.CENTER);
         gc.setTextBaseline(VPos.CENTER);
         gc.setFont(Font.font(15));
         gc.fillText(nombre, (int)centralPoint.getX(), (int)centralPoint.getY());
+        
+        //Dibuja fondo
+        gc.setStroke(Color.BLANCHEDALMOND);
+        gc.setLineWidth(2);
+        for (int i = 0; i < (coordenadas.get(2).getX()-this.centralPoint.getX())+12; i++) {
+            gc.strokeArc(coordenadas.get(2).getX()-21-i, coordenadas.get(0).getY()+1, 40, 40, 270, 180, ArcType.OPEN);
+            gc.strokeArc(coordenadas.get(0).getX()-19+i, coordenadas.get(0).getY()+1, 40, 40, 90, 180,ArcType.OPEN);
+        }
+        for (int j = 0; j < (coordenadas.get(2).getY()-coordenadas.get(0).getY()); j++) {
+            gc.strokeLine(coordenadas.get(0).getX()+1, coordenadas.get(0).getY()+1+j,  coordenadas.get(1).getX()-1, coordenadas.get(1).getY()+1+j);
+        }
+        
         //Dibuja las líneas y arcos
+        gc.setLineWidth(1);
+        gc.setStroke(Color.BLACK);
         gc.strokeLine(coordenadas.get(0).getX(), coordenadas.get(0).getY(),  coordenadas.get(1).getX(), coordenadas.get(1).getY());
         gc.strokeArc(coordenadas.get(2).getX()-20, coordenadas.get(0).getY(), 40, 40, 270, 180, ArcType.OPEN);//right arc
         gc.strokeLine(coordenadas.get(2).getX(), coordenadas.get(2).getY(),  coordenadas.get(3).getX(), coordenadas.get(3).getY());
         gc.strokeArc(coordenadas.get(0).getX()-20, coordenadas.get(0).getY(), 40, 40, 90, 180,ArcType.OPEN);//left arc
         
+        gc.setFont(Font.font(15));
+        gc.fillText(nombre, (int)centralPoint.getX(), (int)centralPoint.getY());
     }
 
     @Override

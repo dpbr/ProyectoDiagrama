@@ -7,6 +7,7 @@ package proyectodiagrama;
 
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -23,13 +24,6 @@ public class Linea extends Figura {
         this.setCentralPoint(inicio.getCentralPoint());
     }
     
-    public void dibujarLinea(GraphicsContext gc){ //tiene que recibir las coordenadas x e y del mouse
-        gc.strokeLine(400, 40, 400, 120);//linea vertical la linea tiene un largo de 80
-        //punta de la linea
-        gc.strokeLine(395, 115, 400, 120);//left cada punto tiene un largo de 5
-        gc.strokeLine(405, 115, 400, 120);//right
-    }
-    
     public void refresh(){
         coordenadas.clear();
         coordenadas.add(inicio.getCentralPoint());
@@ -38,16 +32,23 @@ public class Linea extends Figura {
     
     @Override
     public void dibujarFigura(GraphicsContext gc) {
+        gc.setStroke(Color.RED);
         if(inicio instanceof Documento){
-            gc.strokeLine(coordenadas.get(0).getX(), coordenadas.get(0).getY()+50,  coordenadas.get(1).getX(), coordenadas.get(1).getY()-20);
+            gc.strokeLine(coordenadas.get(0).getX(), coordenadas.get(0).getY()+51,  coordenadas.get(1).getX(), coordenadas.get(1).getY()-20);
         }else{
             gc.strokeLine(coordenadas.get(0).getX(), coordenadas.get(0).getY()+20,  coordenadas.get(1).getX(), coordenadas.get(1).getY()-20);
         }
-        
+        gc.strokeLine(coordenadas.get(1).getX(), coordenadas.get(1).getY()-20, coordenadas.get(1).getX()-5, coordenadas.get(1).getY()-25); //izquierda
+        gc.strokeLine(coordenadas.get(1).getX(), coordenadas.get(1).getY()-20, coordenadas.get(1).getX()+5, coordenadas.get(1).getY()-25); //derecha
+        gc.setStroke(Color.BLACK);
     }
 
     @Override
     public boolean estaDentro(Point2D p) {
+        double m = (coordenadas.get(1).getY()-coordenadas.get(0).getY())/(coordenadas.get(1).getX()-coordenadas.get(0).getX());
+        if(p.getY()-coordenadas.get(0).getY() == m*(p.getX()-coordenadas.get(0).getX())){
+            return true;
+        }
         return false;
     }
 
@@ -56,5 +57,21 @@ public class Linea extends Figura {
         coordenadas.clear();
         coordenadas.add(inicio.getCentralPoint());
         coordenadas.add(fin.getCentralPoint());
+    }
+
+    public Figura getInicio() {
+        return inicio;
+    }
+
+    public void setInicio(Figura inicio) {
+        this.inicio = inicio;
+    }
+
+    public Figura getFin() {
+        return fin;
+    }
+
+    public void setFin(Figura fin) {
+        this.fin = fin;
     }
 }

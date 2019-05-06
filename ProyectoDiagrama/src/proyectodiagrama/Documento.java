@@ -8,6 +8,7 @@ package proyectodiagrama;
 import javafx.geometry.Point2D;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
@@ -19,32 +20,39 @@ import javafx.scene.text.TextAlignment;
 public class Documento extends Figura{
     //Constructor
     public Documento (Point2D p){
-        this.setNombre("Documento");
+        this.setNombre("   ");
         this.setCentralPoint(p);
     }
     
-    public void dibujarDocumento(GraphicsContext gc){ //tiene que recibir las coordenadas x e y del mouse
-        gc.strokeLine(300, 40, 500, 40);//top
-        gc.strokeLine(300, 40, 300, 120);//left
-        gc.strokeLine(500, 40, 500, 100);//right
-        //bottom curves
-        gc.strokeArc(300, 95, 133.3333, 50, 180, 160, ArcType.OPEN);//arc
-        gc.strokeArc(429, 101, 131, 60, 85, 90,ArcType.OPEN);//arc
-    }
-
     @Override
     public void dibujarFigura(GraphicsContext gc) {
         //poner texto dentro de la figura
         gc.setTextAlign(TextAlignment.CENTER);
         gc.setTextBaseline(VPos.CENTER);
-        gc.setFont(Font.font(15));
-        gc.fillText(nombre, (int)centralPoint.getX(), (int)centralPoint.getY());
+        
+        //Dibujar fondo
+        gc.setStroke(Color.MOCCASIN);
+        gc.setLineWidth(2);
+        for (int i = 0; i < (coordenadas.get(2).getY()-coordenadas.get(1).getY()-3); i++) {
+            gc.strokeArc(coordenadas.get(0).getX()+1, coordenadas.get(3).getY()-12.25-i-3, ancho()-2, 25, 180, 180, ArcType.OPEN);//arc
+            gc.strokeArc(coordenadas.get(2).getX()-(ancho()/2), coordenadas.get(2).getY()-i-3, ancho()-2, 40, 90, 90,ArcType.OPEN);//arc
+            
+        }
+        for (int j = 0; j < (coordenadas.get(1).getX()-coordenadas.get(0).getX()-2); j++) {
+            gc.strokeLine(coordenadas.get(1).getX()-j-1, coordenadas.get(1).getY()+1,  coordenadas.get(2).getX()-j-1, coordenadas.get(2).getY()-1);
+        }
+        
         //Dibuja las líneas
+        gc.setLineWidth(1);
+        gc.setStroke(Color.BLACK);
         gc.strokeLine(coordenadas.get(0).getX(), coordenadas.get(0).getY(),  coordenadas.get(1).getX(), coordenadas.get(1).getY());
         gc.strokeLine(coordenadas.get(1).getX(), coordenadas.get(1).getY(),  coordenadas.get(2).getX(), coordenadas.get(2).getY());
         gc.strokeLine(coordenadas.get(3).getX(), coordenadas.get(3).getY(),  coordenadas.get(0).getX(), coordenadas.get(0).getY());
         gc.strokeArc(coordenadas.get(0).getX(), coordenadas.get(3).getY()-12.25, ancho(), 25, 180, 180, ArcType.OPEN);//arc
         gc.strokeArc(coordenadas.get(2).getX()-(ancho()/2), coordenadas.get(2).getY(), ancho(), 40, 90, 90,ArcType.OPEN);//arc
+        
+        gc.setFont(Font.font(15));
+        gc.fillText(nombre, (int)centralPoint.getX(), (int)centralPoint.getY());
     }
 
     @Override
