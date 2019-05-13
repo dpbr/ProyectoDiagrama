@@ -32,14 +32,14 @@ public class EtapaProceso extends Figura{
         gc.setTextBaseline(VPos.CENTER);
         
         //Dibuja fondo
-        gc.setStroke(Color.LAVENDER);
+        gc.setStroke(Color.rgb(242,252,206));//amarillo
         gc.setLineWidth(3.5);
         for (int i = 0; i < (coordenadas.get(1).getX()-this.centralPoint.getX()); i++) {
             gc.strokeLine(coordenadas.get(1).getX()-2*i, coordenadas.get(1).getY()+1,  coordenadas.get(2).getX()-2*i, coordenadas.get(2).getY()-1);
         }
         
         //Dibuja las líneas
-        gc.setStroke(Color.BLACK);
+        gc.setStroke(Color.rgb(155,124,0));//línea amarilla
         gc.setLineWidth(1);
         gc.strokeLine(coordenadas.get(0).getX(), coordenadas.get(0).getY(),  coordenadas.get(1).getX(), coordenadas.get(1).getY());
         gc.strokeLine(coordenadas.get(1).getX(), coordenadas.get(1).getY(),  coordenadas.get(2).getX(), coordenadas.get(2).getY());

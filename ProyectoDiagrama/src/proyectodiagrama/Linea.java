@@ -35,11 +35,20 @@ public class Linea extends Figura {
         gc.setStroke(Color.RED);
         if(inicio instanceof Documento){
             gc.strokeLine(coordenadas.get(0).getX(), coordenadas.get(0).getY()+51,  coordenadas.get(1).getX(), coordenadas.get(1).getY()-20);
-        }else{
-            gc.strokeLine(coordenadas.get(0).getX(), coordenadas.get(0).getY()+20,  coordenadas.get(1).getX(), coordenadas.get(1).getY()-20);
+            gc.strokeLine(coordenadas.get(1).getX(), coordenadas.get(1).getY()-20, coordenadas.get(1).getX()-5, coordenadas.get(1).getY()-25); //izquierda
+            gc.strokeLine(coordenadas.get(1).getX(), coordenadas.get(1).getY()-20, coordenadas.get(1).getX()+5, coordenadas.get(1).getY()-25); //derecha
         }
-        gc.strokeLine(coordenadas.get(1).getX(), coordenadas.get(1).getY()-20, coordenadas.get(1).getX()-5, coordenadas.get(1).getY()-25); //izquierda
-        gc.strokeLine(coordenadas.get(1).getX(), coordenadas.get(1).getY()-20, coordenadas.get(1).getX()+5, coordenadas.get(1).getY()-25); //derecha
+        else if(fin instanceof Condicion){
+            gc.strokeLine(coordenadas.get(0).getX(), coordenadas.get(0).getY()+20,  coordenadas.get(1).getX(), coordenadas.get(1).getY()-30);
+            gc.strokeLine(coordenadas.get(1).getX(), coordenadas.get(1).getY()-30, coordenadas.get(1).getX()-5, coordenadas.get(1).getY()-35); //izquierda
+            gc.strokeLine(coordenadas.get(1).getX(), coordenadas.get(1).getY()-30, coordenadas.get(1).getX()+5, coordenadas.get(1).getY()-35); //derecha
+        }
+        else{
+            gc.strokeLine(coordenadas.get(0).getX(), coordenadas.get(0).getY()+20,  coordenadas.get(1).getX(), coordenadas.get(1).getY()-20);
+            gc.strokeLine(coordenadas.get(1).getX(), coordenadas.get(1).getY()-20, coordenadas.get(1).getX()-5, coordenadas.get(1).getY()-25); //izquierda
+            gc.strokeLine(coordenadas.get(1).getX(), coordenadas.get(1).getY()-20, coordenadas.get(1).getX()+5, coordenadas.get(1).getY()-25); //derecha
+        }
+        
         gc.setStroke(Color.BLACK);
     }
 

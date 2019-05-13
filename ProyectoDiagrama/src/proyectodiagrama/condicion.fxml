@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="400.0" style="-fx-background-color: #BDBFBD;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyectodiagrama.CondicionController">
+   <children>
+      <Label layoutX="164.0" layoutY="48.0" text="Unir con:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnVerdadero" layoutX="92.0" layoutY="91.0" mnemonicParsing="false" onAction="#verdadero" style="-fx-background-color: #5357d6;" text="Verdadero" textFill="WHITE" />
+      <Button fx:id="btnFalso" layoutX="236.0" layoutY="91.0" mnemonicParsing="false" onAction="#falso" prefHeight="25.0" prefWidth="72.0" style="-fx-background-color: #f21322;" text="Falso" textFill="WHITE" />
+   </children>
+</AnchorPane>

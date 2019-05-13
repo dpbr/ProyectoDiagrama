@@ -24,7 +24,7 @@ import javafx.stage.Stage;
  * @author BLANSKPC
  */
 public class ProyectoDiagrama extends Application {
-    
+   
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("proyectoDiagramaFXML.fxml"));

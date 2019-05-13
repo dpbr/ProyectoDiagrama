@@ -8,7 +8,6 @@ package proyectodiagrama;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,7 +19,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -30,6 +28,7 @@ public class ProyectoDiagramaController implements Initializable {
     ArrayList<Figura> figuras = new ArrayList<>();
     static Figura fcambiar=null;
     Point2D mouse,mouseT;
+    static boolean baceptar=false,bentrada=false,bverdaderofalso=false;
     boolean dragged = false, block = false, borrando = false;
     Figura figuradrag;
     Figura inicio=null,fin=null;
@@ -38,11 +37,11 @@ public class ProyectoDiagramaController implements Initializable {
     @FXML
     private Button btnBorrar;
     @FXML
-    private ImageView imgBorrar;
-    @FXML
     private Button btnBorrartodo;
     @FXML
     private Button btnPlay;
+    @FXML
+    private Button btnConsola;
     
     //Constructor
     public ProyectoDiagramaController(){
@@ -63,37 +62,25 @@ public class ProyectoDiagramaController implements Initializable {
     GraphicsContext gc;
 
     @FXML
-    private Pane rectIdentidades;
+    private Pane rectEntidades;
     
     @FXML
     private Button btnLinea;
 
     @FXML
-    private ImageView imgLinea;
-
-    @FXML
-    private ImageView imgInicio;
-
-    @FXML
     private Button btnInicio;
-
-    @FXML
-    private ImageView imgEtapa;
-
+    
     @FXML
     private Button btnEtapa;
-
-    @FXML
-    private ImageView imgEntrada;
 
     @FXML
     private Button btnEntrada;
 
     @FXML
-    private ImageView imgDocumento;
-
-    @FXML
     private Button btnDocumento;
+    
+    @FXML
+    private Button btnCondicion;
     
     @FXML
     void crearDocumento(ActionEvent event) throws IOException {
@@ -115,11 +102,13 @@ public class ProyectoDiagramaController implements Initializable {
             Documento documento = new Documento(new Point2D(canvas.getWidth()/2, canvas.getHeight()/2));
             fcambiar = documento;
             CambioDeVentanas.newVentana(getClass().getResource("popUp.fxml"));
-            documento.setCentralPoint(documento.getCentralPoint());
-            documento.dibujarFigura(gc);
-            figuras.add(documento);
+            if(baceptar){
+                documento.setCentralPoint(documento.getCentralPoint());
+                documento.dibujarFigura(gc);
+                figuras.add(documento);
+            }
         }
-        
+        baceptar=false;
     }
 
     @FXML
@@ -134,14 +123,17 @@ public class ProyectoDiagramaController implements Initializable {
             alertBox("Requiere un INICIO antes"); 
         }else{
             System.out.println("Entrada/Salida creada.");
+            CambioDeVentanas.newVentana(getClass().getResource("EntradaSalida.fxml"));
             EntradaSalida rombo = new EntradaSalida(new Point2D(canvas.getWidth()/2, canvas.getHeight()/2));
             fcambiar = rombo;
-            CambioDeVentanas.newVentana(getClass().getResource("popUp.fxml"));
-            rombo.setCentralPoint(rombo.getCentralPoint());
-            rombo.dibujarFigura(gc);
-            figuras.add(rombo);
+            if(baceptar){
+                rombo.setCentralPoint(rombo.getCentralPoint());
+                rombo.dibujarFigura(gc);
+                figuras.add(rombo);
+            }
         }
-        
+        bentrada=false;
+        baceptar=false;
     }
 
     @FXML
@@ -159,10 +151,13 @@ public class ProyectoDiagramaController implements Initializable {
             EtapaProceso rectangle = new EtapaProceso(new Point2D(canvas.getWidth()/2, canvas.getHeight()/2));
             fcambiar = rectangle;
             CambioDeVentanas.newVentana(getClass().getResource("popUp.fxml"));
-            rectangle.setCentralPoint(rectangle.getCentralPoint());
-            rectangle.dibujarFigura(gc);
-            figuras.add(rectangle);
+            if(baceptar){
+                rectangle.setCentralPoint(rectangle.getCentralPoint());
+                rectangle.dibujarFigura(gc);
+                figuras.add(rectangle);
+            }
         }
+        baceptar=false;
     }
 
     @FXML
@@ -175,29 +170,61 @@ public class ProyectoDiagramaController implements Initializable {
         }
         if (cantIniciofin < 2){
             if (cantIniciofin == 0) { 
-                System.out.println("Inicio/Fin creado.");
-                InicioFin iniciofin = new InicioFin(new Point2D(canvas.getWidth()/2, canvas.getHeight()/2));
-                iniciofin.antes = true;
-                fcambiar = iniciofin;
+                System.out.println("Inicio creado.");
+                InicioFin inicio = new Inicio(new Point2D(canvas.getWidth()/2, canvas.getHeight()/2));
+                //inicio.antes = true;
+                fcambiar = inicio;
                 CambioDeVentanas.newVentana(getClass().getResource("popUp.fxml"));
-                iniciofin.setCentralPoint(iniciofin.getCentralPoint());
-                iniciofin.dibujarFigura(gc);
-                figuras.add(iniciofin);
+                inicio.setCentralPoint(inicio.getCentralPoint());
+                inicio.dibujarFigura(gc);
+                figuras.add(inicio);
             }
             else if(cantIniciofin == 1){
-                System.out.println("Inicio/Fin creado.");
-                InicioFin iniciofin = new InicioFin(new Point2D(canvas.getWidth()/2, canvas.getHeight()/2));
-                iniciofin.despues = true;
-                fcambiar = iniciofin;
+                System.out.println("Fin creado.");
+                InicioFin fin = new Fin(new Point2D(canvas.getWidth()/2, canvas.getHeight()/2));
+                //fin.despues = true;
+                fcambiar = fin;
                 CambioDeVentanas.newVentana(getClass().getResource("popUp.fxml"));
-                iniciofin.setCentralPoint(iniciofin.getCentralPoint());
-                iniciofin.dibujarFigura(gc);
-                figuras.add(iniciofin);
+                if(baceptar){
+                    fin.setCentralPoint(fin.getCentralPoint());
+                    fin.dibujarFigura(gc);
+                    figuras.add(fin);
+                }
             }
         } 
         else{
             alertBox("YA TIENE UN INICIO Y UN FIN");
         }
+        baceptar=false;
+    }
+    
+    @FXML
+    private void crearCondicion(ActionEvent event) throws IOException {
+        cantIniciofin = 0;
+        for(Figura f: figuras){
+            if(f instanceof InicioFin){
+                cantIniciofin++;
+            }
+        }
+        for(Figura f: figuras){
+            if(f instanceof InicioFin){
+                cantIniciofin++;
+            }
+        }
+         if (cantIniciofin == 0) { 
+            alertBox("Requiere un INICIO antes"); 
+        }else{
+            System.out.println("Condicion creada.");
+            Condicion rombo2= new Condicion(new Point2D(canvas.getWidth()/2, canvas.getHeight()/2));
+            fcambiar = rombo2;
+            CambioDeVentanas.newVentana(getClass().getResource("popUp.fxml"));
+            if(baceptar){
+                rombo2.setCentralPoint(rombo2.getCentralPoint());
+                rombo2.dibujarFigura(gc);
+                figuras.add(rombo2); 
+            }
+         }
+         baceptar=false;
     }
 
     @FXML
@@ -208,9 +235,10 @@ public class ProyectoDiagramaController implements Initializable {
             inicio=null;fin=null;
         }
         else{
-            alertBox("Requiere mas de un proceso para crear linea");
+            alertBox("Requiere más de un proceso para crear línea");
         }
     }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         gc = canvas.getGraphicsContext2D();
@@ -280,15 +308,11 @@ public class ProyectoDiagramaController implements Initializable {
         }
     }
     
-    
-
     @FXML
     private void soltar(MouseEvent event) {
         figuradrag = null;
         dragged = false;
     }
-    
-    
     
     @FXML
     private void borrar(ActionEvent e) {
@@ -315,6 +339,8 @@ public class ProyectoDiagramaController implements Initializable {
         btnBorrar.setDisable(block);
         btnBorrartodo.setDisable(block);
         btnPlay.setDisable(block);
+        btnCondicion.setDisable(block);
+        btnConsola.setDisable(block);
     }
 
     @FXML
@@ -322,15 +348,12 @@ public class ProyectoDiagramaController implements Initializable {
         System.out.println("La funcion no está implementada.");
     }
     
-    
-
     @FXML
     private void dobleclick(MouseEvent event) throws IOException {
         if(!block){
-            System.out.println("entrodobleclick");
                 if(event.getButton().equals(MouseButton.PRIMARY)){
                     if(event.getClickCount() == 2){
-                        System.out.println("Double clicked");
+                        System.out.println("Double click");
                         mouse = new Point2D (event.getX(),event.getY());
                         for (Figura f: figuras) {
                             if(f.estaDentro(mouse)){
@@ -356,6 +379,7 @@ public class ProyectoDiagramaController implements Initializable {
                             cantIniciofin--;
                         }
                         //figuras.set(i, null);
+                        //figuras.get(i).antes = false;
                         figuras.remove(i);
                     }
                     for (int j = 0; j < figuras.size(); j++) {
@@ -386,23 +410,22 @@ public class ProyectoDiagramaController implements Initializable {
                 mouse = new Point2D (event.getX(),event.getY());
                 for(Figura f: figuras){
                     if(f.estaDentro(mouse)){
+                        
+                        
                         if(inicio == null){
-                            if (f.despues == false) {
+                            if (f.siguiente == null) {
                                 inicio = f;
-                                f.despues=true;
-                            }
-                            else{
+                                //f.siguiente = true;
+                            }else{
                                 alertBox("Ya hay linea asociada");
                                 block = false;
                                 blockbtn();
                             }
                         }
-                        else if(fin == null && f != inicio && f.antes == false){
+                        else if(fin == null && f != inicio ){//&& f.antes == false
                             fin = f;
-                            f.antes=true;
+                            //f.antes=true;
                             Linea linea = new Linea(inicio, fin);
-                            inicio.lineas.add(linea);
-                            fin.lineas.add(linea);
                             linea.dibujarFigura(gc);
                             figuras.add(linea);
                             block = false;
@@ -412,15 +435,31 @@ public class ProyectoDiagramaController implements Initializable {
                     }
                 }
             }
+//            for(Figura f: figuras){
+//                if(inicio.equals(f)){
+//                    for(Figura f2: figuras){
+//                        if(fin.equals(f2)){
+//                            f.setSiguiente(f2);
+//                            f2.setAnterior(f);
+//                        }
+//                    }
+//                }
+//            }
             borrando = false;
         }
     }
     
     public void alertBox (String text){
         Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("WARNING");
+        alert.setTitle("ADVERTENCIA");
         alert.setHeaderText("ADVERTENCIA");
         alert.setContentText(text);
         alert.showAndWait();
     }
+
+    @FXML
+    private void abrirConsola(ActionEvent event) throws IOException {
+        CambioDeVentanas.newVentana2(getClass().getResource("consola.fxml"));
+    }
+
 }   

@@ -20,8 +20,8 @@ public abstract class Figura {
     String nombre; //Texto que irá en el centro de la figura
     Point2D centralPoint; //Este punto va en el centro de la figura y con él se crean los demás (vértices).
     ArrayList<Point2D> coordenadas = new ArrayList<>(); //Esta lista guardará las coordenadas de los vértices de la figura
-    ArrayList<Linea> lineas = new ArrayList<>();
-    boolean antes = false, despues = false;
+    Figura anterior = null,siguiente = null;
+    
     
     /**
      * Método abstracto que dibuja la figura a base de los puntos de referencia.
@@ -69,13 +69,20 @@ public abstract class Figura {
         this.nombre = nombre;
     }
 
-    public ArrayList<Linea> getLineas() {
-        return lineas;
+    public Figura getAnterior() {
+        return anterior;
     }
 
-    public void setLineas(ArrayList<Linea> lineas) {
-        this.lineas = lineas;
+    public void setAnterior(Figura anterior) {
+        this.anterior = anterior;
     }
-    
+
+    public Figura getSiguiente() {
+        return siguiente;
+    }
+
+    public void setSiguiente(Figura siguiente) {
+        this.siguiente = siguiente;
+    }
     
 }

@@ -36,7 +36,7 @@ public class InicioFin extends Figura {
         gc.fillText(nombre, (int)centralPoint.getX(), (int)centralPoint.getY());
         
         //Dibuja fondo
-        gc.setStroke(Color.BLANCHEDALMOND);
+        gc.setStroke(Color.rgb(247,197,147)); //naranja
         gc.setLineWidth(2);
         for (int i = 0; i < (coordenadas.get(2).getX()-this.centralPoint.getX())+12; i++) {
             gc.strokeArc(coordenadas.get(2).getX()-21-i, coordenadas.get(0).getY()+1, 40, 40, 270, 180, ArcType.OPEN);
@@ -47,8 +47,8 @@ public class InicioFin extends Figura {
         }
         
         //Dibuja las líneas y arcos
+        gc.setStroke(Color.rgb(153,117,6));//línea naranja
         gc.setLineWidth(1);
-        gc.setStroke(Color.BLACK);
         gc.strokeLine(coordenadas.get(0).getX(), coordenadas.get(0).getY(),  coordenadas.get(1).getX(), coordenadas.get(1).getY());
         gc.strokeArc(coordenadas.get(2).getX()-20, coordenadas.get(0).getY(), 40, 40, 270, 180, ArcType.OPEN);//right arc
         gc.strokeLine(coordenadas.get(2).getX(), coordenadas.get(2).getY(),  coordenadas.get(3).getX(), coordenadas.get(3).getY());
@@ -60,8 +60,8 @@ public class InicioFin extends Figura {
 
     @Override
     public boolean estaDentro(Point2D p) {
-        if(p.getX() > coordenadas.get(0).getX() &&
-           p.getX() < coordenadas.get(1).getX() &&
+        if(p.getX() > coordenadas.get(0).getX()-20 &&
+           p.getX() < coordenadas.get(1).getX()+20 &&
            p.getY() > coordenadas.get(0).getY() &&
            p.getY() < coordenadas.get(2).getY()){
             return true;

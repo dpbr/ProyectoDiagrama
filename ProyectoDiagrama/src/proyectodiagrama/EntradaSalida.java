@@ -17,8 +17,7 @@ import javafx.scene.text.TextAlignment;
  * @author BLANSKPC
  */
 public class EntradaSalida extends Figura {
-    
-    
+    boolean bentrada=ProyectoDiagramaController.bentrada;
     //Constructor
     public EntradaSalida (Point2D p){
         this.setNombre("   ");
@@ -30,16 +29,29 @@ public class EntradaSalida extends Figura {
         //poner texto dentro de la figura
         gc.setTextAlign(TextAlignment.CENTER);
         gc.setTextBaseline(VPos.CENTER);
-        
         //Dibuja fondo
-        gc.setStroke(Color.SKYBLUE);
+        if(bentrada){
+            //si no es salida entonces es entrada y tendrá otro color
+            gc.setStroke(Color.rgb(253,229,242));//rosa
+        }
+        else{
+            //si es salida entonces tendrá un color distinto a entrada
+            gc.setStroke(Color.rgb(228,255,233));//verde
+        }
+        
         gc.setLineWidth(3.5);
         for (int i = 0; i < (coordenadas.get(1).getX()-coordenadas.get(0).getX()-3); i++) {
             gc.strokeLine(coordenadas.get(1).getX()-i-3, coordenadas.get(1).getY()+3,  coordenadas.get(2).getX()-i, coordenadas.get(2).getY()-3);
         }
         
         //Dibuja las líneas
-        gc.setStroke(Color.BLACK);
+        if(bentrada){
+            gc.setStroke(Color.rgb(244,108,183));//dibujará las líneas con un rosa más oscuro
+            
+        }
+        else{
+            gc.setStroke(Color.rgb(79,255,101));//dibujará las líneas con un verde más oscuro
+        }
         gc.setLineWidth(1);
         gc.strokeLine(coordenadas.get(0).getX(), coordenadas.get(0).getY(),  coordenadas.get(1).getX(), coordenadas.get(1).getY());
         gc.strokeLine(coordenadas.get(1).getX(), coordenadas.get(1).getY(),  coordenadas.get(2).getX(), coordenadas.get(2).getY());
@@ -54,8 +66,8 @@ public class EntradaSalida extends Figura {
     public boolean estaDentro(Point2D p) {
         if(p.getX() > coordenadas.get(3).getX() &&
            p.getX() < coordenadas.get(1).getX() &&
-           p.getY() > coordenadas.get(0).getY() &&
-           p.getY() < coordenadas.get(2).getY()){
+           p.getY() > coordenadas.get(1).getY() &&
+           p.getY() < coordenadas.get(3).getY()){
             return true;
         }
         return false;
@@ -69,7 +81,5 @@ public class EntradaSalida extends Figura {
         coordenadas.add(new Point2D(p.getX()+((ancho()*3)/4)-10,p.getY()+20));
         coordenadas.add(new Point2D(p.getX()-((ancho()*3)/4)-10,p.getY()+20));
     }
-
-    
     
 }

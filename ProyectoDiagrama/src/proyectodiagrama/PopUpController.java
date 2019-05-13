@@ -31,10 +31,11 @@ public class PopUpController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-    }    
+    } 
 
     @FXML
     private void aceptar(ActionEvent event) {
+        ProyectoDiagramaController.baceptar = true;
         ProyectoDiagramaController.fcambiar.setNombre(tfNombre.getText());
         Stage stage = (Stage) btnAceptar.getScene().getWindow();
         stage.close();
