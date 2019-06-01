@@ -5,7 +5,15 @@
  */
 package proyectodiagrama;
 
-import clases.*;
+import clases.Condicion;
+import clases.Documento;
+import clases.EntradaSalida;
+import clases.EtapaProceso;
+import clases.Figura;
+import clases.Fin;
+import clases.Inicio;
+import clases.InicioFin;
+import clases.Linea;
 import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;

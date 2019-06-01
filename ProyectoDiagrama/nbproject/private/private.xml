@@ -3,9 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/BLANSKPC/Documents/NetBeansProjects/ProyectoDiagramaUltimo/ProyectoDiagrama/src/clases/EtapaProceso.java</file>
             <file>file:/C:/Users/BLANSKPC/Documents/NetBeansProjects/ProyectoDiagramaUltimo/ProyectoDiagrama/src/proyectodiagrama/ProyectoDiagramaController.java</file>
-            <file>file:/C:/Users/BLANSKPC/Documents/NetBeansProjects/ProyectoDiagramaUltimo/ProyectoDiagrama/src/proyectodiagrama/Figura.java</file>
-            <file>file:/C:/Users/BLANSKPC/Documents/NetBeansProjects/ProyectoDiagramaUltimo/ProyectoDiagrama/src/proyectodiagrama/EtapaProceso.java</file>
+            <file>file:/C:/Users/BLANSKPC/Documents/NetBeansProjects/ProyectoDiagramaUltimo/ProyectoDiagrama/src/fxmls/condicion.fxml</file>
+            <file>file:/C:/Users/BLANSKPC/Documents/NetBeansProjects/ProyectoDiagramaUltimo/ProyectoDiagrama/src/clases/Figura.java</file>
+            <file>file:/C:/Users/BLANSKPC/Documents/NetBeansProjects/ProyectoDiagramaUltimo/ProyectoDiagrama/src/fxmls/consola.fxml</file>
+            <file>file:/C:/Users/BLANSKPC/Documents/NetBeansProjects/ProyectoDiagramaUltimo/ProyectoDiagrama/src/fxmls/proyectoDiagramaFXML.fxml</file>
+            <file>file:/C:/Users/BLANSKPC/Documents/NetBeansProjects/ProyectoDiagramaUltimo/ProyectoDiagrama/src/clases/EntradaSalida.java</file>
+            <file>file:/C:/Users/BLANSKPC/Documents/NetBeansProjects/ProyectoDiagramaUltimo/ProyectoDiagrama/src/fxmls/EntradaSalida.fxml</file>
+            <file>file:/C:/Users/BLANSKPC/Documents/NetBeansProjects/ProyectoDiagramaUltimo/ProyectoDiagrama/src/fxmls/popUp.fxml</file>
         </group>
     </open-files>
 </project-private>
