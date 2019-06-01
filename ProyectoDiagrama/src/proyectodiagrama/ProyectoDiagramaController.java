@@ -110,7 +110,7 @@ public class ProyectoDiagramaController implements Initializable {
             System.out.println("Documento creado.");
             Documento documento = new Documento(new Point2D(canvas.getWidth()/2, canvas.getHeight()/2));
             fcambiar = documento;
-            CambioDeVentanas.newVentana(getClass().getResource("popUp.fxml"));
+            CambioDeVentanas.newVentana(getClass().getResource("/fxmls/popUp.fxml"));
             if(baceptar){
                 documento.setCentralPoint(documento.getCentralPoint());
                 documento.dibujarFigura(gc);
@@ -132,7 +132,7 @@ public class ProyectoDiagramaController implements Initializable {
             alertBox("Requiere un INICIO antes"); 
         }else{
             System.out.println("Entrada/Salida creada.");
-            CambioDeVentanas.newVentana(getClass().getResource("EntradaSalida.fxml"));
+            CambioDeVentanas.newVentana(getClass().getResource("/fxmls/EntradaSalida.fxml"));
             EntradaSalida rombo = new EntradaSalida(new Point2D(canvas.getWidth()/2, canvas.getHeight()/2));
             fcambiar = rombo;
             if(baceptar){
@@ -159,7 +159,7 @@ public class ProyectoDiagramaController implements Initializable {
             System.out.println("Etapa del proceso creada.");
             EtapaProceso rectangle = new EtapaProceso(new Point2D(canvas.getWidth()/2, canvas.getHeight()/2));
             fcambiar = rectangle;
-            CambioDeVentanas.newVentana(getClass().getResource("popUp.fxml"));
+            CambioDeVentanas.newVentana(getClass().getResource("/fxmls/popUp.fxml"));
             if(baceptar){
                 rectangle.setCentralPoint(rectangle.getCentralPoint());
                 rectangle.dibujarFigura(gc);
@@ -183,7 +183,7 @@ public class ProyectoDiagramaController implements Initializable {
                 InicioFin inicio = new Inicio(new Point2D(canvas.getWidth()/2, canvas.getHeight()/2));
                 //inicio.antes = true;
                 fcambiar = inicio;
-                CambioDeVentanas.newVentana(getClass().getResource("popUp.fxml"));
+                CambioDeVentanas.newVentana(getClass().getResource("/fxmls/popUp.fxml"));
                 inicio.setCentralPoint(inicio.getCentralPoint());
                 inicio.dibujarFigura(gc);
                 figuras.add(inicio);
@@ -193,7 +193,7 @@ public class ProyectoDiagramaController implements Initializable {
                 InicioFin fin = new Fin(new Point2D(canvas.getWidth()/2, canvas.getHeight()/2));
                 //fin.despues = true;
                 fcambiar = fin;
-                CambioDeVentanas.newVentana(getClass().getResource("popUp.fxml"));
+                CambioDeVentanas.newVentana(getClass().getResource("/fxmls/popUp.fxml"));
                 if(baceptar){
                     fin.setCentralPoint(fin.getCentralPoint());
                     fin.dibujarFigura(gc);
@@ -226,7 +226,7 @@ public class ProyectoDiagramaController implements Initializable {
             System.out.println("Condicion creada.");
             Condicion rombo2= new Condicion(new Point2D(canvas.getWidth()/2, canvas.getHeight()/2));
             fcambiar = rombo2;
-            CambioDeVentanas.newVentana(getClass().getResource("popUp.fxml"));
+            CambioDeVentanas.newVentana(getClass().getResource("/fxmls/popUp.fxml"));
             if(baceptar){
                 rombo2.setCentralPoint(rombo2.getCentralPoint());
                 rombo2.dibujarFigura(gc);
@@ -367,7 +367,7 @@ public class ProyectoDiagramaController implements Initializable {
                         for (Figura f: figuras) {
                             if(f.estaDentro(mouse)){
                                 fcambiar = f;
-                                CambioDeVentanas.newVentana(getClass().getResource("popUp.fxml"));
+                                CambioDeVentanas.newVentana(getClass().getResource("/fxmls/popUp.fxml"));
                                 gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                                 f.setCentralPoint(f.getCentralPoint());
                                 dibujar();
@@ -470,7 +470,7 @@ public class ProyectoDiagramaController implements Initializable {
 
     @FXML
     private void abrirConsola(ActionEvent event) throws IOException {
-        CambioDeVentanas.newVentana2(getClass().getResource("consola.fxml"));
+        CambioDeVentanas.newVentana2(getClass().getResource("/fxmls/consola.fxml"));
     }
     
     public void ordenarFiguras(){
