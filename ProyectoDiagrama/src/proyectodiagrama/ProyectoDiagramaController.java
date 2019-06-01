@@ -5,9 +5,10 @@
  */
 package proyectodiagrama;
 
+import clases.*;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,13 +26,13 @@ import javafx.scene.layout.Pane;
 
 public class ProyectoDiagramaController implements Initializable {
     
-    ArrayList<Figura> figuras = new ArrayList<>();
+    LinkedList<Figura> figuras = new LinkedList<>();
     static Figura fcambiar=null;
     Point2D mouse,mouseT;
-    static boolean baceptar=false,bentrada=false,bverdaderofalso=false;
+    public static boolean baceptar=false,bentrada=false,bverdaderofalso=false;
     boolean dragged = false, block = false, borrando = false;
     Figura figuradrag;
-    Figura inicio=null,fin=null;
+    Figura primeraFigura=null,segundaFigura=null;
     int cantIniciofin=0;
     
     @FXML
@@ -232,7 +233,7 @@ public class ProyectoDiagramaController implements Initializable {
         if(figuras.size()>1){
             block = true;
             blockbtn();
-            inicio=null;fin=null;
+            primeraFigura=null;segundaFigura=null;
         }
         else{
             alertBox("Requiere más de un proceso para crear línea");
@@ -252,15 +253,15 @@ public class ProyectoDiagramaController implements Initializable {
     public void removeFigura(Figura f){
         figuras.remove(f);
     }
-    
-    public ArrayList<Figura> getFiguras() {
+
+    public LinkedList<Figura> getFiguras() {
         return figuras;
     }
 
-    public void setFiguras(ArrayList<Figura> figuras) {
+    public void setFiguras(LinkedList<Figura> figuras) {
         this.figuras = figuras;
     }
-
+    
     public Point2D getMouse() {
         return mouse;
     }
@@ -345,7 +346,7 @@ public class ProyectoDiagramaController implements Initializable {
 
     @FXML
     private void play(ActionEvent event) {
-        System.out.println("La funcion no está implementada.");
+        System.out.println("La función no está implementada.");
     }
     
     @FXML
@@ -371,7 +372,7 @@ public class ProyectoDiagramaController implements Initializable {
             if(borrando){
                 System.out.println("borrando");
                 mouse = new Point2D (event.getX(),event.getY());
-                boolean suelta=false;
+                //boolean suelta=false;
 
                 for (int i = 0; i < figuras.size(); i++) {
                     if(figuras.get(i).estaDentro(mouse)){
@@ -384,18 +385,21 @@ public class ProyectoDiagramaController implements Initializable {
                     }
                     for (int j = 0; j < figuras.size(); j++) {
                         if(figuras.get(j) instanceof Linea){
-                            for(Figura f: figuras){
-                                if((((Linea) figuras.get(j)).getInicio().equals(f)) || (((Linea) figuras.get(j)).getFin().equals(f))){
-                                    suelta=false;
-                                }else{
-                                    suelta=true;
-                                }
-                            }
-                            if(suelta){
+                            if(figuras.get(j).anterior == null || figuras.get(j).siguiente == null){
                                 figuras.remove(j);
-                                j=0;
-                                suelta=false;
                             }
+//                            for(Figura f: figuras){
+//                                if((((Linea) figuras.get(j)).getInicio().equals(f)) || (((Linea) figuras.get(j)).getFin().equals(f))){
+//                                    suelta=false;
+//                                }else{
+//                                    suelta=true;
+//                                }
+//                            }
+//                            if(suelta){
+//                                figuras.remove(j);
+//                                j=0;
+//                                suelta=false;
+//                            }
                         }
                     }
                 }
@@ -411,10 +415,9 @@ public class ProyectoDiagramaController implements Initializable {
                 for(Figura f: figuras){
                     if(f.estaDentro(mouse)){
                         
-                        
-                        if(inicio == null){
+                        if(primeraFigura == null){
                             if (f.siguiente == null) {
-                                inicio = f;
+                                primeraFigura = f;
                                 //f.siguiente = true;
                             }else{
                                 alertBox("Ya hay linea asociada");
@@ -422,10 +425,10 @@ public class ProyectoDiagramaController implements Initializable {
                                 blockbtn();
                             }
                         }
-                        else if(fin == null && f != inicio ){//&& f.antes == false
-                            fin = f;
+                        else if(segundaFigura == null && f != primeraFigura ){//&& f.antes == false
+                            segundaFigura = f;
                             //f.antes=true;
-                            Linea linea = new Linea(inicio, fin);
+                            Linea linea = new Linea(primeraFigura, segundaFigura);
                             linea.dibujarFigura(gc);
                             figuras.add(linea);
                             block = false;
@@ -461,5 +464,30 @@ public class ProyectoDiagramaController implements Initializable {
     private void abrirConsola(ActionEvent event) throws IOException {
         CambioDeVentanas.newVentana2(getClass().getResource("consola.fxml"));
     }
-
+    
+    public void ordenarFiguras(){
+        LinkedList<Figura> figurasOrdenadas = new LinkedList<>();
+        for(Figura f: figuras){
+            if(f instanceof Inicio){
+                figurasOrdenadas.addFirst(f);
+            }
+            
+//            if(f instanceof Condicion || f instanceof Documento || f instanceof EntradaSalida || f instanceof EtapaProceso){
+//                
+//            }
+//            if(f instanceof Fin){
+//                figurasOrdenadas.addLast(f);
+//            }
+        }
+        int i = 0;
+        Figura fagregada;
+        while (i < figuras.size()){
+            if(figurasOrdenadas.size() == 1){
+                fagregada = figurasOrdenadas.get(i).siguiente;
+                figurasOrdenadas.add(fagregada);
+            }
+            i++;
+        }
+        
+    }
 }   

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package proyectodiagrama;
+package clases;
 
 import javafx.geometry.Point2D;
 import javafx.geometry.VPos;
@@ -11,6 +11,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import proyectodiagrama.*;
 
 /**
  *

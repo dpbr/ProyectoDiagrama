@@ -1,4 +1,4 @@
-package proyectodiagrama;
+package clases;
 
 import java.util.ArrayList;
 import javafx.geometry.Point2D;
@@ -15,12 +15,12 @@ import javafx.scene.text.Text;
  *
  * @author BLANSKPC
  */
-public abstract class Figura {
+public abstract class Figura{
     //atributos
     String nombre; //Texto que irá en el centro de la figura
     Point2D centralPoint; //Este punto va en el centro de la figura y con él se crean los demás (vértices).
     ArrayList<Point2D> coordenadas = new ArrayList<>(); //Esta lista guardará las coordenadas de los vértices de la figura
-    Figura anterior = null,siguiente = null;
+    public Figura anterior = null,siguiente = null;
     
     
     /**

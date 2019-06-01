@@ -5,6 +5,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+<?import proyectodiagrama.*?>
 
 <AnchorPane id="AnchorPane" prefHeight="150.0" prefWidth="400.0" style="-fx-background-color: #BDBFBD;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyectodiagrama.PopUpController">
    <children>
