@@ -5,7 +5,6 @@
  */
 package proyectodiagrama;
 
-
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -27,7 +26,7 @@ public class ProyectoDiagrama extends Application {
    
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("proyectoDiagramaFXML.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxmls/proyectoDiagramaFXML.fxml"));
         
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -41,6 +40,7 @@ public class ProyectoDiagrama extends Application {
      */
     public static void main(String[] args) {
         launch(args);
+        
     }
     
 }
