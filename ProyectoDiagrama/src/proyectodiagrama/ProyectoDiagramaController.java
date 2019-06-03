@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package proyectodiagrama;
 
 import clases.Condicion;
@@ -35,13 +30,14 @@ import javafx.scene.layout.Pane;
 public class ProyectoDiagramaController implements Initializable {
     
     LinkedList<Figura> figuras = new LinkedList<>();
+    LinkedList<Figura> diagrama = new LinkedList<>();
     static Figura fcambiar=null;
     Point2D mouse,mouseT;
     public static boolean baceptar=false,bentrada=false,bverdaderofalso=false;
     boolean dragged = false, block = false, borrando = false;
     Figura figuradrag;
     Figura primeraFigura=null,segundaFigura=null;
-    int cantIniciofin=0;
+    int cantIniciofin=0, f1=0;
     
     @FXML
     private Button btnBorrar;
@@ -181,17 +177,18 @@ public class ProyectoDiagramaController implements Initializable {
             if (cantIniciofin == 0) { 
                 System.out.println("Inicio creado.");
                 InicioFin inicio = new Inicio(new Point2D(canvas.getWidth()/2, canvas.getHeight()/2));
-                //inicio.antes = true;
                 fcambiar = inicio;
                 CambioDeVentanas.newVentana(getClass().getResource("/fxmls/popUp.fxml"));
                 inicio.setCentralPoint(inicio.getCentralPoint());
                 inicio.dibujarFigura(gc);
                 figuras.add(inicio);
+                primeraFigura = inicio;
+                diagrama.add(primeraFigura);
             }
             else if(cantIniciofin == 1){
                 System.out.println("Fin creado.");
                 InicioFin fin = new Fin(new Point2D(canvas.getWidth()/2, canvas.getHeight()/2));
-                //fin.despues = true;
+                
                 fcambiar = fin;
                 CambioDeVentanas.newVentana(getClass().getResource("/fxmls/popUp.fxml"));
                 if(baceptar){
@@ -241,7 +238,6 @@ public class ProyectoDiagramaController implements Initializable {
         if(figuras.size()>1){
             block = true;
             blockbtn();
-            primeraFigura=null;segundaFigura=null;
         }
         else{
             alertBox("Requiere más de un proceso para crear línea");
@@ -293,7 +289,6 @@ public class ProyectoDiagramaController implements Initializable {
             if(figuradrag == null){
                 for(Figura f: figuras){
                     if(f.estaDentro(mouse)){
-                        //f.setCentralPoint(mouse);
                         figuradrag = f;
                     }
                 }
@@ -335,6 +330,7 @@ public class ProyectoDiagramaController implements Initializable {
     @FXML
     private void borrarTodo(ActionEvent event) {
         figuras.clear();
+        diagrama.clear();
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
     
@@ -380,34 +376,17 @@ public class ProyectoDiagramaController implements Initializable {
             if(borrando){
                 System.out.println("borrando");
                 mouse = new Point2D (event.getX(),event.getY());
-                //boolean suelta=false;
 
                 for (int i = 0; i < figuras.size(); i++) {
                     if(figuras.get(i).estaDentro(mouse)){
                         if(figuras.get(i) instanceof InicioFin){
                             cantIniciofin--;
                         }
-                        //figuras.set(i, null);
-                        //figuras.get(i).antes = false;
                         figuras.remove(i);
                     }
                     for (int j = 0; j < figuras.size(); j++) {
                         if(figuras.get(j) instanceof Linea){
-                            if(figuras.get(j).anterior == null || figuras.get(j).siguiente == null){
-                                figuras.remove(j);
-                            }
-//                            for(Figura f: figuras){
-//                                if((((Linea) figuras.get(j)).getInicio().equals(f)) || (((Linea) figuras.get(j)).getFin().equals(f))){
-//                                    suelta=false;
-//                                }else{
-//                                    suelta=true;
-//                                }
-//                            }
-//                            if(suelta){
-//                                figuras.remove(j);
-//                                j=0;
-//                                suelta=false;
-//                            }
+
                         }
                     }
                 }
@@ -422,40 +401,24 @@ public class ProyectoDiagramaController implements Initializable {
                 mouse = new Point2D (event.getX(),event.getY());
                 for(Figura f: figuras){
                     if(f.estaDentro(mouse)){
-                        
-                        if(primeraFigura == null){
-                            if (f.siguiente == null) {
-                                primeraFigura = f;
-                                //f.siguiente = true;
-                            }else{
-                                alertBox("Ya hay linea asociada");
-                                block = false;
-                                blockbtn();
+                        if(!(f.equals(primeraFigura)) && !(f instanceof Inicio)){
+                            segundaFigura = f;
+                            if (!(diagrama.contains(f))) {
+                                Linea linea = new Linea(primeraFigura, segundaFigura);
+                                diagrama.add(linea);
+                                figuras.add(linea);
+                                diagrama.add(segundaFigura);
+                                linea.dibujarFigura(gc);
+                                
                             }
                         }
-                        else if(segundaFigura == null && f != primeraFigura ){//&& f.antes == false
-                            segundaFigura = f;
-                            //f.antes=true;
-                            Linea linea = new Linea(primeraFigura, segundaFigura);
-                            linea.dibujarFigura(gc);
-                            figuras.add(linea);
-                            block = false;
-                            blockbtn();
-                            return;
-                        }
+                        primeraFigura = diagrama.getLast();
+                        block = false;
+                        blockbtn();
+                        return;
                     }
                 }
             }
-//            for(Figura f: figuras){
-//                if(inicio.equals(f)){
-//                    for(Figura f2: figuras){
-//                        if(fin.equals(f2)){
-//                            f.setSiguiente(f2);
-//                            f2.setAnterior(f);
-//                        }
-//                    }
-//                }
-//            }
             borrando = false;
         }
     }
@@ -473,29 +436,4 @@ public class ProyectoDiagramaController implements Initializable {
         CambioDeVentanas.newVentana2(getClass().getResource("/fxmls/consola.fxml"));
     }
     
-    public void ordenarFiguras(){
-        LinkedList<Figura> figurasOrdenadas = new LinkedList<>();
-        for(Figura f: figuras){
-            if(f instanceof Inicio){
-                figurasOrdenadas.addFirst(f);
-            }
-            
-//            if(f instanceof Condicion || f instanceof Documento || f instanceof EntradaSalida || f instanceof EtapaProceso){
-//                
-//            }
-//            if(f instanceof Fin){
-//                figurasOrdenadas.addLast(f);
-//            }
-        }
-        int i = 0;
-        Figura fagregada;
-        while (i < figuras.size()){
-            if(figurasOrdenadas.size() == 1){
-                fagregada = figurasOrdenadas.get(i).siguiente;
-                figurasOrdenadas.add(fagregada);
-            }
-            i++;
-        }
-        
-    }
 }   
