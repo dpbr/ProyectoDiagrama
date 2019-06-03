@@ -5,12 +5,6 @@ import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.text.Text;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
  * @author BLANSKPC
@@ -20,8 +14,6 @@ public abstract class Figura{
     String nombre; //Texto que irá en el centro de la figura
     Point2D centralPoint; //Este punto va en el centro de la figura y con él se crean los demás (vértices).
     ArrayList<Point2D> coordenadas = new ArrayList<>(); //Esta lista guardará las coordenadas de los vértices de la figura
-    public Figura anterior = null,siguiente = null;
-    
     
     /**
      * Método abstracto que dibuja la figura a base de los puntos de referencia.
@@ -69,20 +61,4 @@ public abstract class Figura{
         this.nombre = nombre;
     }
 
-    public Figura getAnterior() {
-        return anterior;
-    }
-
-    public void setAnterior(Figura anterior) {
-        this.anterior = anterior;
-    }
-
-    public Figura getSiguiente() {
-        return siguiente;
-    }
-
-    public void setSiguiente(Figura siguiente) {
-        this.siguiente = siguiente;
-    }
-    
 }
