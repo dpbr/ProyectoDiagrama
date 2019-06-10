@@ -11,9 +11,9 @@ import javafx.scene.text.Text;
  */
 public abstract class Figura{
     //atributos
-    String nombre; //Texto que irá en el centro de la figura
-    Point2D centralPoint; //Este punto va en el centro de la figura y con él se crean los demás (vértices).
-    ArrayList<Point2D> coordenadas = new ArrayList<>(); //Esta lista guardará las coordenadas de los vértices de la figura
+    private String nombre; //Texto que irá en el centro de la figura
+    private Point2D centralPoint; //Este punto va en el centro de la figura y con él se crean los demás (vértices).
+    private ArrayList<Point2D> coordenadas = new ArrayList<>(); //Esta lista guardará las coordenadas de los vértices de la figura
     
     /**
      * Método abstracto que dibuja la figura a base de los puntos de referencia.
@@ -60,5 +60,15 @@ public abstract class Figura{
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    public ArrayList<Point2D> getCoordenadas() {
+        return coordenadas;
+    }
+
+    public void setCoordenadas(ArrayList<Point2D> coordenadas) {
+        this.coordenadas = coordenadas;
+    }
+    
+    
 
 }
