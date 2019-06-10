@@ -30,15 +30,15 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 public class ProyectoDiagramaController implements Initializable {
-    
     LinkedList<Figura> figuras = new LinkedList<>();
     LinkedList<Figura> diagrama = new LinkedList<>();
     LinkedList<Figura> correr = new LinkedList<>();
     static Figura fcambiar=null;
     Point2D mouse,mouseT;
+    public boolean esta=false;
     public static boolean baceptar=false,bentrada=false,bverdaderofalso=false;
     boolean dragged = false, block = false, borrando = false;
-    Figura figuradrag;
+    Figura figuradrag,figuraaux,figuraaux2;
     Figura primeraFigura=null,segundaFigura=null;
     int cantIniciofin=0, f1=0,n = 0,nl = 0;
     
@@ -50,48 +50,34 @@ public class ProyectoDiagramaController implements Initializable {
     private Button btnPlay;
     @FXML
     private Button btnConsola;
-    
-    //Constructor
-    public ProyectoDiagramaController(){
-        
-    }
-
     @FXML
     private MenuBar menubar;
-    
     @FXML
     private MenuItem mBorrar;
-    
     @FXML
     private MenuItem menuBorrartodo;
-    
     @FXML
     private Canvas canvas;
     GraphicsContext gc;
-
     @FXML
     private Pane rectEntidades;
-    
     @FXML
     private Button btnLinea;
-
     @FXML
     private Button btnInicio;
-    
     @FXML
     private Button btnEtapa;
-
     @FXML
     private Button btnEntrada;
-
     @FXML
     private Button btnDocumento;
-    
     @FXML
     private Button btnCondicion;
-    
+    //Constructor
+    public ProyectoDiagramaController(){
+    }
     @FXML
-    void crearDocumento(ActionEvent event) throws IOException {
+    public void crearDocumento(ActionEvent event) throws IOException {
         cantIniciofin = 0;
         for(Figura f: figuras){
             if(f instanceof InicioFin){
@@ -118,9 +104,8 @@ public class ProyectoDiagramaController implements Initializable {
         }
         baceptar=false;
     }
-
     @FXML
-    void crearEntrada(ActionEvent event) throws IOException {
+    public void crearEntrada(ActionEvent event) throws IOException {
         cantIniciofin = 0;
         for(Figura f: figuras){
             if(f instanceof InicioFin){
@@ -143,9 +128,8 @@ public class ProyectoDiagramaController implements Initializable {
         bentrada=false;
         baceptar=false;
     }
-
     @FXML
-    void crearEtapa(ActionEvent event) throws IOException {
+    public void crearEtapa(ActionEvent event) throws IOException {
         cantIniciofin = 0;
         for(Figura f: figuras){
             if(f instanceof InicioFin){
@@ -167,9 +151,8 @@ public class ProyectoDiagramaController implements Initializable {
         }
         baceptar=false;
     }
-
     @FXML
-    void crearInicio(ActionEvent event) throws IOException {
+    public void crearInicio(ActionEvent event) throws IOException {
         cantIniciofin = 0;
         for(Figura f: figuras){
             if(f instanceof InicioFin){
@@ -206,7 +189,6 @@ public class ProyectoDiagramaController implements Initializable {
         }
         baceptar=false;
     }
-    
     @FXML
     private void crearCondicion(ActionEvent event) throws IOException {
         cantIniciofin = 0;
@@ -234,10 +216,9 @@ public class ProyectoDiagramaController implements Initializable {
             }
          }
          baceptar=false;
-    }
-
+    }   
     @FXML
-    void crearLinea(ActionEvent event) {
+    public void crearLinea(ActionEvent event) {
         if(figuras.size()>1){
             block = true;
             blockbtn();
@@ -399,26 +380,35 @@ public class ProyectoDiagramaController implements Initializable {
             if(borrando){
                 System.out.println("borrando");
                 mouse = new Point2D (event.getX(),event.getY());
-
-                for (int i = 0; i < figuras.size(); i++) {
-                    if(figuras.get(i).estaDentro(mouse)){
-                        if(figuras.get(i) instanceof InicioFin){
-                            cantIniciofin--;
+                for (int i = 0; i < diagrama.size(); i++) {
+                    if(diagrama.get(i).estaDentro(mouse)){
+                        if(diagrama.get(i) instanceof InicioFin){
+                            System.out.println("esta figura no maderfaker");
                         }
-                        figuras.remove(i);
-                    }
-                    for (int j = 0; j < figuras.size(); j++) {
-                        if(figuras.get(j) instanceof Linea){
-
+                        else{
+                            if(diagrama.size()> (i+1)){
+                                ((Linea)diagrama.get(i+1)).setInicio(diagrama.get(i-2));
+                            }
+                            figuraaux=diagrama.get(i);
+                            figuraaux2=diagrama.get(i-1);
+                            diagrama.remove(i);
+                            diagrama.remove(i-1);
+                            if(figuras.contains(figuraaux2)){
+                                figuras.remove(figuraaux2);
+                            }
+                            if(figuras.contains(figuraaux)){
+                                figuras.remove(figuraaux);
+                            }
+                            figuraaux2=null;
+                            figuraaux=null;
+                            primeraFigura = diagrama.getLast();
                         }
                     }
                 }
-                
                 gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 dibujar();
                 block = false;
                 blockbtn();
-                
             }else{
                 //crearLinea
                 mouse = new Point2D (event.getX(),event.getY());
