@@ -26,18 +26,21 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 public class ProyectoDiagramaController implements Initializable {
     
     LinkedList<Figura> figuras = new LinkedList<>();
     LinkedList<Figura> diagrama = new LinkedList<>();
+    LinkedList<Figura> correr = new LinkedList<>();
     static Figura fcambiar=null;
     Point2D mouse,mouseT;
     public static boolean baceptar=false,bentrada=false,bverdaderofalso=false;
     boolean dragged = false, block = false, borrando = false;
     Figura figuradrag;
     Figura primeraFigura=null,segundaFigura=null;
-    int cantIniciofin=0, f1=0;
+    int cantIniciofin=0, f1=0,n = 0,nl = 0;
     
     @FXML
     private Button btnBorrar;
@@ -310,6 +313,8 @@ public class ProyectoDiagramaController implements Initializable {
             }
             f.dibujarFigura(gc);
         }
+        n=0;
+        correr.clear();
     }
     
     @FXML
@@ -350,7 +355,25 @@ public class ProyectoDiagramaController implements Initializable {
 
     @FXML
     private void play(ActionEvent event) {
-        System.out.println("La función no está implementada.");
+        if (n == 0) {
+            for (Figura figura : diagrama) {
+                if (!(figura instanceof Linea)) {
+                    correr.add(figura);
+                    System.out.println("Figura> "+ figura.getNombre());
+                }
+            }
+        }
+        gc.setFill(Color.DARKSLATEBLUE);
+        gc.setFont(Font.font(16));
+        if (n < correr.size()) {
+            gc.fillText(n+1+"", correr.get(n).getCoordenadas().get(0).getX()-20, correr.get(n).getCoordenadas().get(0).getY()-10);
+        }
+        gc.setFill(Color.BLACK);
+        n++;
+        if(n > correr.size()){
+            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+            dibujar();
+        }
     }
     
     @FXML

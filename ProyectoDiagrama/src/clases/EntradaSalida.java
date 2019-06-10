@@ -36,8 +36,8 @@ public class EntradaSalida extends Figura {
         }
         
         gc.setLineWidth(3.5);
-        for (int i = 0; i < (coordenadas.get(1).getX()-coordenadas.get(0).getX()-3); i++) {
-            gc.strokeLine(coordenadas.get(1).getX()-i-3, coordenadas.get(1).getY()+3,  coordenadas.get(2).getX()-i, coordenadas.get(2).getY()-3);
+        for (int i = 0; i < (this.getCoordenadas().get(1).getX()-this.getCoordenadas().get(0).getX()-3); i++) {
+            gc.strokeLine(this.getCoordenadas().get(1).getX()-i-3, this.getCoordenadas().get(1).getY()+3,  this.getCoordenadas().get(2).getX()-i, this.getCoordenadas().get(2).getY()-3);
         }
         
         //Dibuja las líneas
@@ -49,21 +49,21 @@ public class EntradaSalida extends Figura {
             gc.setStroke(Color.rgb(79,255,101));//dibujará las líneas con un verde más oscuro
         }
         gc.setLineWidth(1);
-        gc.strokeLine(coordenadas.get(0).getX(), coordenadas.get(0).getY(),  coordenadas.get(1).getX(), coordenadas.get(1).getY());
-        gc.strokeLine(coordenadas.get(1).getX(), coordenadas.get(1).getY(),  coordenadas.get(2).getX(), coordenadas.get(2).getY());
-        gc.strokeLine(coordenadas.get(2).getX(), coordenadas.get(2).getY(),  coordenadas.get(3).getX(), coordenadas.get(3).getY());
-        gc.strokeLine(coordenadas.get(3).getX(), coordenadas.get(3).getY(),  coordenadas.get(0).getX(), coordenadas.get(0).getY());
+        gc.strokeLine(this.getCoordenadas().get(0).getX(), this.getCoordenadas().get(0).getY(),  this.getCoordenadas().get(1).getX(), this.getCoordenadas().get(1).getY());
+        gc.strokeLine(this.getCoordenadas().get(1).getX(), this.getCoordenadas().get(1).getY(),  this.getCoordenadas().get(2).getX(), this.getCoordenadas().get(2).getY());
+        gc.strokeLine(this.getCoordenadas().get(2).getX(), this.getCoordenadas().get(2).getY(),  this.getCoordenadas().get(3).getX(), this.getCoordenadas().get(3).getY());
+        gc.strokeLine(this.getCoordenadas().get(3).getX(), this.getCoordenadas().get(3).getY(),  this.getCoordenadas().get(0).getX(), this.getCoordenadas().get(0).getY());
         
         gc.setFont(Font.font(15));
-        gc.fillText(nombre, (int)centralPoint.getX(), (int)centralPoint.getY());
+        gc.fillText(this.getNombre(), (int)this.getCentralPoint().getX(), (int)this.getCentralPoint().getY());
     }
 
     @Override
     public boolean estaDentro(Point2D p) {
-        if(p.getX() > coordenadas.get(3).getX() &&
-           p.getX() < coordenadas.get(1).getX() &&
-           p.getY() > coordenadas.get(1).getY() &&
-           p.getY() < coordenadas.get(3).getY()){
+        if(p.getX() > this.getCoordenadas().get(3).getX() &&
+           p.getX() < this.getCoordenadas().get(1).getX() &&
+           p.getY() > this.getCoordenadas().get(1).getY() &&
+           p.getY() < this.getCoordenadas().get(3).getY()){
             return true;
         }
         return false;
@@ -71,11 +71,11 @@ public class EntradaSalida extends Figura {
 
     @Override
     public void crear(Point2D p) {
-        coordenadas.clear();
-        coordenadas.add(new Point2D(p.getX()-((ancho()*3)/4)+10,p.getY()-20));
-        coordenadas.add(new Point2D(p.getX()+((ancho()*3)/4)+10,p.getY()-20));
-        coordenadas.add(new Point2D(p.getX()+((ancho()*3)/4)-10,p.getY()+20));
-        coordenadas.add(new Point2D(p.getX()-((ancho()*3)/4)-10,p.getY()+20));
+        this.getCoordenadas().clear();
+        this.getCoordenadas().add(new Point2D(p.getX()-((ancho()*3)/4)+10,p.getY()-20));
+        this.getCoordenadas().add(new Point2D(p.getX()+((ancho()*3)/4)+10,p.getY()-20));
+        this.getCoordenadas().add(new Point2D(p.getX()+((ancho()*3)/4)-10,p.getY()+20));
+        this.getCoordenadas().add(new Point2D(p.getX()-((ancho()*3)/4)-10,p.getY()+20));
     }
     
 }

@@ -20,28 +20,28 @@ public class Linea extends Figura {
     }
     
     public void refresh(){
-        coordenadas.clear();
-        coordenadas.add(inicio.getCentralPoint());
-        coordenadas.add(fin.getCentralPoint());
+        this.getCoordenadas().clear();
+        this.getCoordenadas().add(inicio.getCentralPoint());
+        this.getCoordenadas().add(fin.getCentralPoint());
     }
     
     @Override
     public void dibujarFigura(GraphicsContext gc) {
         gc.setStroke(Color.RED);
         if(inicio instanceof Documento){
-            gc.strokeLine(coordenadas.get(0).getX(), coordenadas.get(0).getY()+51,  coordenadas.get(1).getX(), coordenadas.get(1).getY()-20);
-            gc.strokeLine(coordenadas.get(1).getX(), coordenadas.get(1).getY()-20, coordenadas.get(1).getX()-5, coordenadas.get(1).getY()-25); //izquierda
-            gc.strokeLine(coordenadas.get(1).getX(), coordenadas.get(1).getY()-20, coordenadas.get(1).getX()+5, coordenadas.get(1).getY()-25); //derecha
+            gc.strokeLine(this.getCoordenadas().get(0).getX(), this.getCoordenadas().get(0).getY()+51,  this.getCoordenadas().get(1).getY(), this.getCoordenadas().get(1).getY()-20);
+            gc.strokeLine(this.getCoordenadas().get(1).getX(), this.getCoordenadas().get(1).getY()-20, this.getCoordenadas().get(1).getX()-5, this.getCoordenadas().get(1).getY()-25); //izquierda
+            gc.strokeLine(this.getCoordenadas().get(1).getX(), this.getCoordenadas().get(1).getY()-20, this.getCoordenadas().get(1).getX()+5, this.getCoordenadas().get(1).getY()-25); //derecha
         }
         else if(fin instanceof Condicion){
-            gc.strokeLine(coordenadas.get(0).getX(), coordenadas.get(0).getY()+20,  coordenadas.get(1).getX(), coordenadas.get(1).getY()-30);
-            gc.strokeLine(coordenadas.get(1).getX(), coordenadas.get(1).getY()-30, coordenadas.get(1).getX()-5, coordenadas.get(1).getY()-35); //izquierda
-            gc.strokeLine(coordenadas.get(1).getX(), coordenadas.get(1).getY()-30, coordenadas.get(1).getX()+5, coordenadas.get(1).getY()-35); //derecha
+            gc.strokeLine(this.getCoordenadas().get(0).getX(), this.getCoordenadas().get(0).getY()+20,  this.getCoordenadas().get(1).getX(), this.getCoordenadas().get(1).getY()-30);
+            gc.strokeLine(this.getCoordenadas().get(1).getX(), this.getCoordenadas().get(1).getY()-30, this.getCoordenadas().get(1).getX()-5, this.getCoordenadas().get(1).getY()-35); //izquierda
+            gc.strokeLine(this.getCoordenadas().get(1).getX(), this.getCoordenadas().get(1).getY()-30, this.getCoordenadas().get(1).getX()+5, this.getCoordenadas().get(1).getY()-35); //derecha
         }
         else{
-            gc.strokeLine(coordenadas.get(0).getX(), coordenadas.get(0).getY()+20,  coordenadas.get(1).getX(), coordenadas.get(1).getY()-20);
-            gc.strokeLine(coordenadas.get(1).getX(), coordenadas.get(1).getY()-20, coordenadas.get(1).getX()-5, coordenadas.get(1).getY()-25); //izquierda
-            gc.strokeLine(coordenadas.get(1).getX(), coordenadas.get(1).getY()-20, coordenadas.get(1).getX()+5, coordenadas.get(1).getY()-25); //derecha
+            gc.strokeLine(this.getCoordenadas().get(0).getX(), this.getCoordenadas().get(0).getY()+20,  this.getCoordenadas().get(1).getX(), this.getCoordenadas().get(1).getY()-20);
+            gc.strokeLine(this.getCoordenadas().get(1).getX(), this.getCoordenadas().get(1).getY()-20, this.getCoordenadas().get(1).getX()-5, this.getCoordenadas().get(1).getY()-25); //izquierda
+            gc.strokeLine(this.getCoordenadas().get(1).getX(), this.getCoordenadas().get(1).getY()-20, this.getCoordenadas().get(1).getX()+5, this.getCoordenadas().get(1).getY()-25); //derecha
         }
         
         gc.setStroke(Color.BLACK);
@@ -49,8 +49,8 @@ public class Linea extends Figura {
 
     @Override
     public boolean estaDentro(Point2D p) {
-        double m = (coordenadas.get(1).getY()-coordenadas.get(0).getY())/(coordenadas.get(1).getX()-coordenadas.get(0).getX());
-        if(p.getY()-coordenadas.get(0).getY() == m*(p.getX()-coordenadas.get(0).getX())){
+        double m = (this.getCoordenadas().get(1).getY()-this.getCoordenadas().get(0).getY())/(this.getCoordenadas().get(1).getX()-this.getCoordenadas().get(0).getX());
+        if(p.getY()-this.getCoordenadas().get(0).getY() == m*(p.getX()-this.getCoordenadas().get(0).getX())){
             return true;
         }
         return false;
@@ -58,9 +58,9 @@ public class Linea extends Figura {
 
     @Override
     public void crear(Point2D p) {
-        coordenadas.clear();
-        coordenadas.add(inicio.getCentralPoint());
-        coordenadas.add(fin.getCentralPoint());
+        this.getCoordenadas().clear();
+        this.getCoordenadas().add(inicio.getCentralPoint());
+        this.getCoordenadas().add(fin.getCentralPoint());
     }
 
     public Figura getInicio() {
