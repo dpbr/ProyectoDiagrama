@@ -34,7 +34,7 @@ public class ProyectoDiagramaController implements Initializable {
     LinkedList<Figura> diagrama = new LinkedList<>();
     LinkedList<Figura> correr = new LinkedList<>();
     static Figura fcambiar=null;
-    Point2D mouse,mouseT;
+    private Point2D mouse,mouseT;
     public boolean esta=false;
     public static boolean baceptar=false,bentrada=false,bverdaderofalso=false;
     boolean dragged = false, block = false, borrando = false;

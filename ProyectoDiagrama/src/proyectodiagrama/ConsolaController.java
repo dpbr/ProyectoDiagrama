@@ -10,7 +10,8 @@ import javafx.fxml.Initializable;
  * @author BLANSKPC
  */
 public class ConsolaController implements Initializable {
-
+    
+    
     /**
      * Initializes the controller class.
      */

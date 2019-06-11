@@ -9,7 +9,7 @@ import javafx.scene.paint.Color;
  * @author BLANSKPC
  */
 public class Linea extends Figura {
-    Figura inicio,fin;
+    private Figura inicio,fin;
     
     //Constructor
     public Linea (Figura inicio, Figura fin){
@@ -29,7 +29,7 @@ public class Linea extends Figura {
     public void dibujarFigura(GraphicsContext gc) {
         gc.setStroke(Color.RED);
         if(inicio instanceof Documento){
-            gc.strokeLine(this.getCoordenadas().get(0).getX(), this.getCoordenadas().get(0).getY()+51,  this.getCoordenadas().get(1).getY(), this.getCoordenadas().get(1).getY()-20);
+            gc.strokeLine(this.getCoordenadas().get(0).getX(), this.getCoordenadas().get(0).getY()+51,  this.getCoordenadas().get(1).getX(), this.getCoordenadas().get(1).getY()-20);
             gc.strokeLine(this.getCoordenadas().get(1).getX(), this.getCoordenadas().get(1).getY()-20, this.getCoordenadas().get(1).getX()-5, this.getCoordenadas().get(1).getY()-25); //izquierda
             gc.strokeLine(this.getCoordenadas().get(1).getX(), this.getCoordenadas().get(1).getY()-20, this.getCoordenadas().get(1).getX()+5, this.getCoordenadas().get(1).getY()-25); //derecha
         }
